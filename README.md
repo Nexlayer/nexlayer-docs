@@ -70,38 +70,38 @@ name: Build Docker Image
 
 on:
   push:
-	branches:
-	  - main
+    branches:
+      - main
 
 jobs:
   build:
-	runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-	permissions:
+    permissions:
       contents: read
       packages: write
 
-	steps:
-	- name: Checkout code
-	  uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-	- name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
-	- name: Set repository owner lowercase # Necessary for Docker image tagging
-        id: owner_lowercase
-        run: echo "owner_lowercase=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+    - name: Set repository owner lowercase # Necessary for Docker image tagging
+      id: owner_lowercase
+      run: echo "owner_lowercase=$(echo '${{ github.repository_owner }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
 
-	- name: Build and Push Docker Image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/${{ env.owner_lowercase }}/my-image-name:v0.0.1
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ghcr.io/${{ env.owner_lowercase }}/my-image-name:v0.0.1
 ```
 
 3. Replace `my-image-name` with the name of your Docker image.

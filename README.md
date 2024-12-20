@@ -53,9 +53,12 @@ Templates are an easy way to deploy your favorite apps to NexLayer.
 | `DATABASE_HOST`            | The hostname of your database.                                                              | -                                                 |
 | `NEO4J_URI`                | The URI of your Neo4j database.                                                             | -                                                 |
 | `DATABASE_CONNECTION_STRING` | The connection string to connect to your database.                                          | `postgresql://user:password@host:port/dbname`    |
-| `FRONTEND_CONNECTION_URL`  | The URL to connect to your frontend. Connects to your `react`, `angular`, or `vue` pod.     | -                                                 |
-| `BACKEND_CONNECTION_URL`   | The URL to connect to your backend. Connects to your `django`, `fastapi`, or `express` pod. | -                                                 |
-| `LLM_CONNECTION_URL`       | The URL to connect to your LLM. Connects to your `llm` pod.                                 | -                                                 |
+| `FRONTEND_CONNECTION_URL`  | The URL to connect to your frontend. Connects to your `react`, `angular`, or `vue` pod.  Prefixed with `http://`     | -                         |
+| `BACKEND_CONNECTION_URL`   | The URL to connect to your backend. Connects to your `django`, `fastapi`, or `express` pod.  Prefixed with `http://` | -                         |
+| `LLM_CONNECTION_URL`       | The URL to connect to your LLM. Connects to your `llm` pod.  Prefixed with `http://`                                 | -                         |
+| `FRONTEND_CONNECTION_DOMAIN`| The domain to connect to your frontend.  Connects to your `react`, `angular`, or `vue` pod.  Does NOT include a prefix| -                       |
+| `BACKEND_CONNECTION_DOMAIN`| The domain to connect to your backend.  Connects to your `django`, `fastapi`, or `express` pod.  Does NOT include a prefix| -                       |
+| `LLM_CONNECTION_DOMAIN`| The domain to connect to your LLM.  Connects to your `llm` pod.  Does NOT include a prefix| -                       |
 
 
 ## Creating a Github Actions Workflow to Build your Docker Image

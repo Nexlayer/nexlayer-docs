@@ -1,5 +1,5 @@
 # Nexlayer Templates
-Templates are an easy way to deploy your favorite apps to NexLayer. 
+Templates are an easy way to deploy your favorite apps to Nexlayer. 
 
 ## General Template Structure
 

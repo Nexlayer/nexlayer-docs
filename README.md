@@ -35,6 +35,7 @@ docs/
     ├── post-deploy.md
     └── examples.md
 ```
+3. Replace `my-image` with your Docker image name.
 
 ## 📝 Documentation Standards
 

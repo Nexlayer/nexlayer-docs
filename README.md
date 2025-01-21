@@ -59,13 +59,22 @@ Set `exposeHttp: true` to make the pod accessible via HTTP.
 
 Templates include predefined environment variables to simplify configuration:
 
-| Variable                  | Description                         | Example                             |
-| ------------------------- | ----------------------------------- | ----------------------------------- |
-| `PROXY_URL`               | URL of the deployed Nexlayer site.  | `https://example.alpha.nexlayer.ai` |
-| `DATABASE_HOST`           | Hostname for your database pod.     | `db-pod.alpha.nexlayer.ai`          |
-| `FRONTEND_CONNECTION_URL` | URL to connect to the frontend pod. | `http://frontend.alpha.nexlayer.ai` |
-| `BACKEND_CONNECTION_URL`  | URL to connect to the backend pod.  | `http://backend.alpha.nexlayer.ai`  |
-| `LLM_CONNECTION_URL`      | URL for the deployed LLM pod.       | `http://llm.alpha.nexlayer.ai`      |
+| Variable Value               | Description                                                                                                              | Example                                       |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------- |
+| `PROXY_URL`                  | The URL of your created Nexlayer site.                                                                                   | `https://your-site-name.alpha.nexlayer.ai`    |
+| `PROXY_DOMAIN`               | The domain of your created Nexlayer site.                                                                                | `your-site-name.alpha.nexlayer.ai`            |
+| `DATABASE_HOST`              | The hostname of your database.                                                                                           | -                                             |
+| `NEO4J_URI`                  | The URI of your Neo4j database.                                                                                          | -                                             |
+| `DATABASE_CONNECTION_STRING` | The connection string to connect to your database.                                                                       | `postgresql://user:password@host:port/dbname` |
+| `FRONTEND_CONNECTION_URL`    | The URL to connect to your frontend. Connects to your `react`, `angular`, or `vue` pod. Prefixed with `http://`          | -                                             |
+| `BACKEND_CONNECTION_URL`     | The URL to connect to your backend. Connects to your `django`, `fastapi`, or `express` pod. Prefixed with `http://`      | -                                             |
+| `LLM_CONNECTION_URL`         | The URL to connect to your LLM. Connects to your `llm` pod. Prefixed with `http://`                                      | -                                             |
+| `FRONTEND_CONNECTION_DOMAIN` | The domain to connect to your frontend. Connects to your `react`, `angular`, or `vue` pod. Does NOT include a prefix     | -                                             |
+| `BACKEND_CONNECTION_DOMAIN`  | The domain to connect to your backend. Connects to your `django`, `fastapi`, or `express` pod. Does NOT include a prefix | -                                             |
+| `LLM_CONNECTION_DOMAIN`      | The domain to connect to your LLM. Connects to your `llm` pod. Does NOT include a prefix                                 | -                                             |
+
+
+
 
 ---
 

@@ -1,75 +1,83 @@
 # Nexlayer Templates
-Templates are an easy way to deploy your favorite apps to Nexlayer. 
 
-## General Template Structure
+Welcome to Nexlayer Templates, the fastest way to deploy full-stack applications with ease. Our platform ensures you can go from configuration to deployment in just a few clicks.
 
-`application.template.name`: The name of the application template. This name will be used to identify the template stack.
+**Why Nexlayer?**
 
-`application.template.deploymentName`: The name of the deployment. This name will be used as your deployment name in the Nexlayer UI.
+- 🚀 **Speed**: Pre-configured templates for popular tech stacks.
+- ⚙️ **Flexibility**: Fully customizable YAML configurations.
+- 📈 **Scalability**: Built-in support for horizontal scaling and load balancing.
 
-`application.template.registryLogin`: The registry login information. This is the login information for the registry where any of your private Docker images are stored.
+Use this guide to explore, customize, and deploy templates that match your application needs.
 
-`application.template.pods`: The `pods` section is an array of objects that define the pods that will be deployed. Each pod object has the following properties:
+---
 
-- `type`: The type of pod to be deployed.  In the current version, this can be one of the following:
-  - `database`
-  - `llm`
-  - `django`
-  - `fastapi`
-  - `express`
-  - `react`
-  - `angular`
-  - `vue`
-  - `nginx`
+## 🚀 Quick Start
 
-- `exposeHttp`: A boolean value that determines whether the pod should be exposed via HTTP. If true, the pod will be exposed via HTTP. If false, the pod will not be exposed via HTTP. This is required if true!
+1. **Choose a Template**: Pick the template that suits your app or stack.
+2. **Customize the Template**: Modify the provided YAML as needed.
+3. **Deploy**: Use Nexlayer's web UI, CLI, or SDK to launch your app in seconds.
 
-- `name`: The name of the pod. This name will be used to identify the pod further.  In the current version, this can be one of the following:
-	- For `database` type pods:
-		- `postgres`
-		- `mysql`
-		- `neo4j`
-		- `redis`
-		- `mongodb`
-   - For `llm` type pods:
-	- This can be any name you want to give to the pod to describe the llm.  Currently, only one llm may be provisioned per deployment.
-   - For remaining pod types:
-	- This name must match the name of the pod type.  For example, for a `django` pod, the name must be `django`.
+---
 
-- `tag`: The Docker image to be used for the pod. This can be a public image or a private image stored in a private registry.
+## 📂 General Template Structure
 
-- `privateTag`: A boolean value that determines whether the Docker image is stored in a private registry. If true, the Docker image is stored in a private registry.  This is required if true!
+Each Nexlayer template follows a consistent structure for seamless deployment:
 
-- `vars`: The environment variables to be set for the pod. This is an array of objects, where each object has the following properties:
-  - `name`: The name of the environment variable.
-  - `value`: The value of the environment variable.
+### Template Fields
 
-## Nexlayer Provided Vars Values
+- **`application.template.name`**: Identifier for the application template stack.
+- **`application.template.deploymentName`**: Your deployment's name in Nexlayer.
+- **`application.template.registryLogin`**: Login credentials for private Docker registries.
 
-| Variable Value             | Description                                                                                  | Example                                           |
-|----------------------------|----------------------------------------------------------------------------------------------|---------------------------------------------------|
-| `PROXY_URL`                | The URL of your created Nexlayer site.                                                      | `https://your-site-name.alpha.nexlayer.ai`       |
-| `PROXY_DOMAIN`             | The domain of your created Nexlayer site.                                                   | `your-site-name.alpha.nexlayer.ai`              |
-| `DATABASE_HOST`            | The hostname of your database.                                                              | -                                                 |
-| `NEO4J_URI`                | The URI of your Neo4j database.                                                             | -                                                 |
-| `DATABASE_CONNECTION_STRING` | The connection string to connect to your database.                                          | `postgresql://user:password@host:port/dbname`    |
-| `FRONTEND_CONNECTION_URL`  | The URL to connect to your frontend. Connects to your `react`, `angular`, or `vue` pod.  Prefixed with `http://`     | -                         |
-| `BACKEND_CONNECTION_URL`   | The URL to connect to your backend. Connects to your `django`, `fastapi`, or `express` pod.  Prefixed with `http://` | -                         |
-| `LLM_CONNECTION_URL`       | The URL to connect to your LLM. Connects to your `llm` pod.  Prefixed with `http://`                                 | -                         |
-| `FRONTEND_CONNECTION_DOMAIN`| The domain to connect to your frontend.  Connects to your `react`, `angular`, or `vue` pod.  Does NOT include a prefix| -                       |
-| `BACKEND_CONNECTION_DOMAIN`| The domain to connect to your backend.  Connects to your `django`, `fastapi`, or `express` pod.  Does NOT include a prefix| -                       |
-| `LLM_CONNECTION_DOMAIN`| The domain to connect to your LLM.  Connects to your `llm` pod.  Does NOT include a prefix| -                       |
+### Pods Configuration
 
+Define the components of your app using the `pods` array:
 
-## Creating a Github Actions Workflow to Build your Docker Image
+| Field        | Description                                                     | Example                               |
+| ------------ | --------------------------------------------------------------- | ------------------------------------- |
+| `type`       | The pod type (`database`, `llm`, `django`, `react`, etc.).      | `django`                              |
+| `name`       | Specific name for the pod (e.g., `postgres`, `mongodb`, `vue`). | `vue`                                 |
+| `tag`        | Docker image used for the pod.                                  | `node:14-alpine`                      |
+| `privateTag` | Boolean to indicate if the image is from a private registry.    | `true`                                |
+| `vars`       | Environment variables for the pod.                              | `[{"name": "PORT", "value": "3000"}]` |
 
-Follow the steps below to create a Github Actions workflow to build your Docker image and push it to the Github Container Registry.
+### Supported Pod Types and Names
 
-1. Create a new file in your repository named `.github/workflows/docker-publish.yml`.
-2. Copy and paste the following code into the file:
+- **Database**: `postgres`, `mysql`, `neo4j`, `redis`, `mongodb`
+- **Frontend**: `react`, `angular`, `vue`
+- **Backend**: `django`, `fastapi`, `express`
+- **Others**: `nginx`, `llm` (custom naming allowed)
+
+### Expose HTTP
+
+Set `exposeHttp: true` to make the pod accessible via HTTP.
+
+---
+
+## 🔧 Nexlayer-Provided Environment Variables
+
+Templates include predefined environment variables to simplify configuration:
+
+| Variable                  | Description                         | Example                             |
+| ------------------------- | ----------------------------------- | ----------------------------------- |
+| `PROXY_URL`               | URL of the deployed Nexlayer site.  | `https://example.alpha.nexlayer.ai` |
+| `DATABASE_HOST`           | Hostname for your database pod.     | `db-pod.alpha.nexlayer.ai`          |
+| `FRONTEND_CONNECTION_URL` | URL to connect to the frontend pod. | `http://frontend.alpha.nexlayer.ai` |
+| `BACKEND_CONNECTION_URL`  | URL to connect to the backend pod.  | `http://backend.alpha.nexlayer.ai`  |
+| `LLM_CONNECTION_URL`      | URL for the deployed LLM pod.       | `http://llm.alpha.nexlayer.ai`      |
+
+---
+
+## 🔄 Github Actions Workflow for Docker Images
+
+To build and push your Docker images for Nexlayer:
+
+1. Create a `.github/workflows/docker-publish.yml` file.
+2. Add the following workflow code:
 
 ```yaml
-name: Build Docker Image
+name: Build and Push Docker Image
 
 on:
   push:
@@ -106,11 +114,258 @@ jobs:
         push: true
         tags: ghcr.io/${{ env.owner_lowercase }}/my-image-name:v0.0.1
 ```
+3. Replace `my-image` with your Docker image name.
 
-3. Replace `my-image-name` with the name of your Docker image.
+---
 
-This will create a Github Actions workflow that builds your Docker image and pushes it to the Github Container Registry. The workflow will run whenever you push to the `main` branch.
+## 📚 Template Catalog
 
-You can set the context of the `Build and Push Docker Image` step to the directory where your Dockerfile is located. If your Dockerfile is located in the root directory of your repository, you can set the context to `.`.
+Explore our ready-to-use full-stack templates:
 
-To view an example of a Github Actions workflow that builds and pushes multiple Docker images to the Github Container Registry, see the `.github/workflows/docker-publish.yml` file in any of the stack repositories under the Nexlayer organization.
+### 🛠 Template Overview
+
+| Template Name       | Frontend Framework | Backend Framework | Database       | Best For                             |
+| ------------------- | ------------------ | ----------------- | -------------- | ------------------------------------ |
+| **MERN Todo List**  | React              | Express           | MongoDB        | Task management with React frontend. |
+| **MEAN Todo List**  | Angular            | Express           | MongoDB        | Responsive to-do list with Angular.  |
+| **MEVN Todo App**   | Vue.js             | Express           | MongoDB        | User-friendly Vue.js task manager.   |
+| **MNFA User Store** | Angular            | FastAPI, Neo4j    | MongoDB, Neo4j | User management and authentication.  |
+| **PERN Todo List**  | React              | Express           | PostgreSQL     | Full-stack app with PostgreSQL DB.   |
+
+---
+
+### 🌐 How Nexlayer Templates Work
+
+```mermaid
+graph TD
+    A[Select Template] --> B[Customize YAML Configuration]
+    B --> C[Validate with Nexlayer CLI or UI]
+    C --> D[Deployment Process in Kubernetes Cluster]
+    D --> E[Autoscaling and Load Balancing]
+    E --> F[Application Ready and URL Provided]
+    F --> G[Monitor and Scale Resources Dynamically]
+```
+
+---
+
+### MERN Todo List
+
+**[GitHub Repository](https://github.com/Nexlayer/MERN-Todo-List)**\
+**Description**: A React-based template for task management.\
+**Snippet**:
+
+```yaml
+application:
+  template:
+    name: "mongodb-express-react-nodejs"
+    deploymentName: "My MERN Todo App"
+    registryLogin:
+      registry: ghcr.io
+      username: <Github username>
+      personalAccessToken: <Github Packages Read-Only PAT>
+    pods:
+    - type: database
+      exposeHttp: false
+      name: mongoDB
+      tag: <ghcr.io/myLowercaseUsername/mern-mongo-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mongo
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: passw0rd
+    - type: express
+      exposeHttp: false
+      name: express
+      tag: <ghcr.io/myLowercaseUsername/mern-express-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGODB_URL
+        value: DATABASE_CONNECTION_STRING
+    - type: nginx
+      exposeHttp: true
+      name: nginx
+      tag: <ghcr.io/myLowercaseUsername/mern-react-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: EXPRESS_URL
+        value: BACKEND_CONNECTION_URL
+```
+
+### MEAN Todo List
+
+**[GitHub Repository](https://github.com/Nexlayer/MEAN-Todo-List)**\
+**Description**: Angular-powered template for a responsive to-do list.\
+**Snippet**:
+
+```yaml
+application:
+  template:
+    name: "mongodb-express-angular-nodejs"
+    deploymentName: "My MEAN Todo App"
+    registryLogin:
+      registry: ghcr.io
+      username: <Github username>
+      personalAccessToken: <Github Packages Read-Only PAT>
+    pods:
+    - type: database
+      exposeHttp: false
+      name: mongoDB
+      tag: <ghcr.io/myLowercaseUsername/mean-mongo-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mongo
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: passw0rd
+      - key: MONGO_INITDB_DATABASE
+        value: mongo
+    - type: express
+      exposeHttp: false
+      name: express
+      tag: <ghcr.io/myLowercaseUsername/mean-express-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGODB_URL
+        value: DATABASE_CONNECTION_STRING
+    - type: nginx
+      exposeHttp: true
+      name: nginx
+      tag: <ghcr.io/myLowercaseUsername/mean-angular-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: EXPRESS_URL
+        value: BACKEND_CONNECTION_URL
+```
+
+### MEVN Todo App
+
+**[GitHub Repository](https://github.com/Nexlayer/MEVN-Todo-App)**\
+**Description**: Vue.js-based template for a user-friendly task manager.\
+**Snippet**:
+
+```yaml
+application:
+  template:
+    name: "mongodb-express-vue-nodejs"
+    deploymentName: "My MEVN Todo App"
+    registryLogin:
+      registry: ghcr.io
+      username: <Github username>
+      personalAccessToken: <Github Packages Read-Only PAT>
+    pods:
+    - type: database
+      exposeHttp: false
+      name: mongoDB
+      tag: <ghcr.io/myLowercaseUsername/mevn-mongo-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mongo
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: passw0rd
+      - key: MONGO_INITDB_DATABASE
+        value: todo
+    - type: express
+      exposeHttp: false
+      name: express
+      tag: <ghcr.io/myLowercaseUsername/mevn-express-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGO_URL
+        value: DATABASE_CONNECTION_STRING
+    - type: nginx
+      exposeHttp: true
+      name: nginx
+      tag: <ghcr.io/myLowercaseUsername/mevn-vue-todo:v0.0.1>
+      privateTag: true
+      vars:
+      - key: EXPRESS_URL
+        value: BACKEND_CONNECTION_URL
+```
+
+### MNFA User Store App
+
+**[GitHub Repository](https://github.com/Nexlayer/MNFA-User-Store-App)**\
+**Description**: FastAPI backend for user management and authentication.\
+**Snippet**:
+
+```yaml
+application:
+  template:
+    name: "mongodb-neo4j-fastAPI-angular"
+    deploymentName: "My MNFA User Store"
+    registryLogin:
+      registry: ghcr.io
+      username: <Github username>
+      personalAccessToken: <Github Packages Read-Only PAT>
+    pods:
+    - type: database
+      exposeOn80: false
+      name: mongoDB
+      tag: <ghcr.io/myLowercaseUsername/mnfa-mongo-user-store:v0.0.1>
+      privateTag: true
+      vars:
+      - key: MONGO_INITDB_ROOT_USERNAME
+        value: mongo
+      - key: MONGO_INITDB_ROOT_PASSWORD
+        value: passw0rd
+      - key: MONGO_INITDB_DATABASE
+        value: mongo
+    - type: neo4j
+      exposeOn80: false
+      name: neo4j
+      tag: neo4j:5.23.0
+      vars:
+      - key: NEO4J_AUTH
+        value: neo4j/passw0rd
+    - type: fastAPI
+      exposeOn80: false
+      name: fastAPI
+      tag: <ghcr.io/myLowercaseUsername/mnfa-fastapi-user-store:v0.0.1>
+      privateTag: true
+      vars:
+      - key: NEO4J_URL
+        value: NEO4J_URI
+      - key: NEO4J_USERNAME
+        value: neo4j
+      - key: NEO4J_PASSWORD
+        value: passw0rd
+      - key: MONGODB_URL
+        value: DATABASE_CONNECTION_STRING
+      - key: MONGODB_DB
+        value: mongo
+    - type: nginx
+      exposeOn80: true
+      name: nginx
+      tag: <ghcr.io/myLowercaseUsername/mnfa-angular-user-store:v0.0.1>
+      privateTag: true
+      vars:
+      - key: EXPRESS_URL
+        value: BACKEND_CONNECTION_URL
+```
+
+### PDN Todo List
+
+**[GitHub Repository](https://github.com/Nexlayer/PDN-Todo-List)**\
+**Description**: Django-powered backend for to-do apps.
+
+### PERN Todo List
+
+**[GitHub Repository](https://github.com/Nexlayer/PERN-Todo-List)**\
+**Description**: A PostgreSQL, Express, React, and Node.js stack template.
+
+---
+
+## 🤝 Contribute
+
+Found a bug or have ideas for improvement? Submit feedback or issues directly on our [GitHub Issues Page](https://github.com/Nexlayer/templates/issues).
+
+---
+
+## 💡 Pro Tips
+
+- **Short Deployment Times**: Use the provided `vars` to preconfigure services and skip manual setup.
+- **Flexible Scaling**: Leverage Nexlayer’s HPA and caching mechanisms for high-traffic apps.
+- **One-Click Deploy**: Modify and deploy directly from the YAML editor on Nexlayer.
+

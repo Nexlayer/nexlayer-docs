@@ -16,7 +16,7 @@ Use this guide to explore, customize, and deploy templates that match your appli
 
 1. **Choose a Template**: Pick the template that suits your app or stack.
 2. **Customize the Template**: Modify the provided YAML as needed.
-3. **Deploy**: Use Nexlayer's web UI, CLI, or SDK to launch your app in seconds.
+3. **Deploy**: Use Nexlayer's web UI or CLI to launch your app in seconds.
 
 ---
 

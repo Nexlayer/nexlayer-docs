@@ -143,20 +143,6 @@ Explore our ready-to-use full-stack templates:
 
 ---
 
-### 🌐 How Nexlayer Templates Work
-
-```mermaid
-graph TD
-    A[Select Template] --> B[Customize YAML Configuration]
-    B --> C[Validate with Nexlayer CLI or UI]
-    C --> D[Deployment Process in Kubernetes Cluster]
-    D --> E[Autoscaling and Load Balancing]
-    E --> F[Application Ready and URL Provided]
-    F --> G[Monitor and Scale Resources Dynamically]
-```
-
----
-
 ### MERN Todo List
 
 **[GitHub Repository](https://github.com/Nexlayer/MERN-Todo-List)**\

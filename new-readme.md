@@ -1,4 +1,4 @@
-# Nexlayer YAML Schema Documentation (v1.2)
+# Nexlayer YAML Schema Template Documentation (v1.0)
 
 # 🚀 What is Nexlayer?
 

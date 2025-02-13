@@ -252,6 +252,18 @@ application:
     - 5432  # Exposing PostgreSQL database on port 5432
 
 ```
+| **Pod Name**  | **Exposed Port(s)** | **Intended Service**                | **Consistent?** |
+|--------------|------------------|--------------------------------|--------------|
+| `web-app`   | `3000`            | Next.js frontend               | ✅ Yes |
+| `backend`   | `3001`            | API backend (Next.js API routes) | ✅ Yes |
+| `database`  | `5432`            | PostgreSQL database            | ✅ Yes |
+
+### 📌 Port Explanation:
+- **Frontend (`web-app`)**: Uses **port `3000`**, which is standard for **Next.js apps**.
+- **Backend (`backend`)**: Uses **port `3001`**, aligning with your structure for an **API backend**.
+- **Database (`database`)**: Uses **port `5432`**, which is **PostgreSQL's default port**.
+
+
 
 # Example Fullstack AI-Powered Web Application Architecture
 
@@ -407,6 +419,26 @@ pods:
 - **Web App → PostgreSQL:** Stores application data `(web-app → postgres.pod:5432)`  
 - **Web App → Redis:** Caches results `(web-app → redis.pod:6379)`  
 - **Data Worker → MinIO:** Processes large datasets `(data-worker → minio.pod:9000)`
+
+| **Pod Name**      | **Exposed Port(s)** | **Intended Service**                     | **Consistent?** |
+|------------------|------------------|---------------------------------|--------------|
+| `web-app`       | `3000`            | Next.js frontend & API           | ✅ Yes |
+| `ai-model`      | `5000`            | AI model inference service       | ✅ Yes |
+| `data-worker`   | `4000`            | Data processing worker           | ✅ Yes |
+| `vector-db`     | `8080`            | Vector embeddings database       | ✅ Yes |
+| `redis`        | `6379`            | Caching & message queue          | ✅ Yes |
+| `postgres`      | `5432`            | Relational database (PostgreSQL) | ✅ Yes |
+| `minio`        | `9000, 9001`      | Object storage & UI console      | ✅ Yes |
+
+### 📌 Port Explanation:
+- **Frontend (`web-app`)**: Uses **port `3000`**, standard for **Next.js frontend & API**.
+- **AI Model (`ai-model`)**: Uses **port `5000`**, for **inference API endpoint**.
+- **Data Worker (`data-worker`)**: Uses **port `4000`**, for **processing and analytics tasks**.
+- **Vector Database (`vector-db`)**: Uses **port `8080`**, for **storing vector embeddings**.
+- **Redis (`redis`)**: Uses **port `6379`**, for **caching and message queueing**.
+- **PostgreSQL (`postgres`)**: Uses **port `5432`**, **default for relational databases**.
+- **MinIO (`minio`)**: Uses **ports `9000` (API) & `9001` (Console UI)**, for **S3-compatible object storage**.
+
 
 ## Best Practices
 

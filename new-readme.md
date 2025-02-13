@@ -1,9 +1,22 @@
 # Nexlayer YAML Schema Documentation (v1.2)
 
-<div align="center">
-  <h3>🚀 Simplified Kubernetes Deployment for Modern Applications</h3>
-  <p><em>Deploy your applications in seconds with a single YAML file</em></p>
-</div>
+# 🚀 What is Nexlayer?
+
+Nexlayer is a simplified an AI-powered kubernetes cloud platform that enables seamless deployments through a specialized YAML template schema. 
+It's designed for startups, developers, creators and AI agents, making complex production deployments accessible without deep cloud infrastructure expertise.
+
+## ✨ Key Features
+
+- **Pod Management**: Define individual containers for your application  
+- **Storage Configuration**: Persistent volumes for data retention  
+- **Security Controls**: Secure storage of secrets, API keys, and sensitive data  
+- **Environment Management**: Application-specific configuration settings  
+- **Network Configuration**: Service ports for inter-container and external communication  
+- **Registry Authentication**: Private registry login support  
+- **Auto-Discovery**: Automatic networking between components  
+- **Container Controls**: Customize startup behavior with entrypoints and commands  
+- **AI/ML Support**: Specialized configurations for AI-powered applications  
+
 
 ## 📖 Table of Contents
 
@@ -19,19 +32,6 @@
 - [Examples](#examples)
 - [Deployment Guide](#deployment-guide)
 
-## Overview
-
-Nexlayer YAML schema simplifies deployment configuration, eliminating complex Kubernetes YAML files. This template is optimized for both developers and automation tools, making cloud deployment straightforward and efficient.
-
-## Key Features
-
-- 🔄 **Pod Configuration**: Define individual containers for your application
-- 💾 **Persistent Storage**: Automatic volume management for data retention
-- 🔐 **Secrets Management**: Secure storage of sensitive information
-- 🌍 **Environment Variables**: Application-specific configuration settings
-- 🔌 **Service Ports**: Inter-container and external communication setup
-- 🤖 **Pod Discovery**: Automatic networking between components
-- 🏭 **Container Commands**: Customizable startup behaviors
 
 ## Basic Structure
 

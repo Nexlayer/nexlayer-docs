@@ -171,69 +171,160 @@ pods:
       DATABASE_URL: postgresql://db.pod:5432/app
 ```
 
-### Full-Stack Application with Database
+# AI-Powered Application Architecture
 
+A typical AI-powered application consists of:
+
+- **Web Interface (Frontend & API)** - Next.js, React, or FastAPI  
+- **AI Model Inference** - Hugging Face, OpenAI, or custom LLMs  
+- **Data Processing Worker** - Python jobs, Spark, or analytics  
+- **Vector Database** - Pinecone, Weaviate, or FAISS  
+- **Message Queue & Caching** - Redis or Kafka  
+- **Relational Database** - PostgreSQL or MySQL  
+- **Object Storage** - MinIO for large datasets  
+
+## 1. Web Application Pod (Frontend & API)
 ```yaml
-application:
-  name: "full-stack-app"
-
 pods:
-  - name: frontend
-    image: nextjs-app:latest
+  - name: web-app
+    image: mycompany/web-app:latest
     path: /
     servicePorts:
       - 3000
     vars:
-      API_URL: http://api.pod:4000
+      DATABASE_URL: postgresql://postgres:postgres@postgres.pod:5432/postgres
+      AI_API_URL: http://ai-model.pod:5000
+      REDIS_HOST: redis.pod
+      REDIS_PORT: "6379"
+      REDIS_AUTH: myredissecret
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| postgres.pod:5432 | Main database connection |
+| ai-model.pod:5000 | AI model inference service |
+| redis.pod:6379 | Caching and message queue |
 
-  - name: api
-    image: express-api:latest
+## 2. AI Model Inference Pod
+```yaml
+pods:
+  - name: ai-model
+    image: huggingface/transformers:latest
+    servicePorts:
+      - 5000
+    vars:
+      MODEL_NAME: bert-base-uncased
+      GPU_ENABLED: "true"
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| vector-db.pod:8080 | Vector embeddings storage |
+| :5000 | Exposed inference API endpoint |
+
+## 3. Data Processing Worker Pod
+```yaml
+pods:
+  - name: data-worker
+    image: mycompany/data-processor:latest
     servicePorts:
       - 4000
     vars:
-      DATABASE_URL: postgresql://postgres:pass@db.pod:5432/app
-      REDIS_URL: redis://cache.pod:6379
+      VECTOR_DB_URL: http://vector-db.pod:8080
+      REDIS_HOST: redis.pod
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| vector-db.pod:8080 | Vector database for embeddings |
+| redis.pod | Task queue and caching |
 
-  - name: db
-    image: postgres:14
+## 4. Vector Database Pod
+```yaml
+pods:
+  - name: vector-db
+    image: weaviate/weaviate:latest
+    servicePorts:
+      - 8080
+    vars:
+      PERSISTENCE_MODE: disk
+      ENABLE_MODULES: text2vec-transformers
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| :8080 | Vector search and storage API |
+
+## 5. Redis Pod (Caching & Message Queue)
+```yaml
+pods:
+  - name: redis
+    image: redis:7
+    command: --requirepass myredissecret
+    servicePorts:
+      - 6379
+    vars:
+      REDIS_AUTH: myredissecret
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| :6379 | Redis server port |
+| REDIS_AUTH | Authentication for secure access |
+
+## 6. PostgreSQL Pod (Relational Database)
+```yaml
+pods:
+  - name: postgres
+    image: postgres:latest
     servicePorts:
       - 5432
     vars:
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ai_application
     volumes:
       - name: postgres-data
         size: 10Gi
-        mountPath: /var/lib/postgresql/data
-
-  - name: cache
-    image: redis:7
-    servicePorts:
-      - 6379
+        mountPath: /var/lib/postgresql
 ```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| :5432 | PostgreSQL server port |
+| postgres-data | Persistent volume for database |
 
-## Deployment Guide
+## 7. MinIO Pod (Object Storage)
+```yaml
+pods:
+  - name: minio
+    image: minio/minio:latest
+    entrypoint: /bin/sh
+    command: -c "mkdir -p /data/appdata && minio server --address ':9000' --console-address ':9001' /data"
+    servicePorts:
+      - 9000
+      - 9001
+    vars:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: miniosecret
+    volumes:
+      - name: minio-data
+        size: 10Gi
+        mountPath: /data
+```
+### Connection Table
+| Connection | Description |
+|------------|-------------|
+| :9000 | MinIO S3 API endpoint |
+| :9001 | MinIO Console UI |
+| minio-data | Persistent volume for objects |
 
-1. **Create Configuration**
-   - Save your configuration as `nexlayer.yaml`
-   - Validate your configuration:
-     ```bash
-     nexlayer validate
-     ```
-
-2. **Deploy Application**
-   ```bash
-   nexlayer deploy
-   ```
-
-3. **Monitor Deployment**
-   ```bash
-   nexlayer status
-   ```
-
-4. **Access Logs**
-   ```bash
-   nexlayer logs <pod-name>
-   ```
+## Pod Communication Flow
+- **Web App → AI Model:** Sends inference requests `(web-app → ai-model.pod:5000)`  
+- **AI Model → Vector DB:** Retrieves embeddings `(ai-model → vector-db.pod:8080)`  
+- **Web App → PostgreSQL:** Stores application data `(web-app → postgres.pod:5432)`  
+- **Web App → Redis:** Caches results `(web-app → redis.pod:6379)`  
+- **Data Worker → MinIO:** Processes large datasets `(data-worker → minio.pod:9000)`
 
 ## Best Practices
 

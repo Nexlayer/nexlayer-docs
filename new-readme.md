@@ -197,7 +197,7 @@ pods:
       DATABASE_URL: postgresql://db.pod:5432/app
 ```
 
-# AI-Powered Application Architecture
+# Example Full-Stack AI-Powered Web Application Architecture
 
 A typical AI-powered application consists of:
 

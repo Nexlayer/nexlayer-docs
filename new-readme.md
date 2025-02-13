@@ -48,7 +48,7 @@ application:
   pods:
     - name: Pod name (must start with a lowercase letter and can include only alphanumeric characters, '-', '.')
       path: Path to render pod at (such as '/' for frontend). Only required for forward-facing pods.
-      image: Docker image for the pod. 
+      image: Docker image faor the pod. 
         # For private images, use the following schema exactly as shown: '<% REGISTRY %>/some/path/image:tag'.
         # Images will be tagged as private if they include '<% REGISTRY %>', which will be replaced with the registry specified above.
       volumes:
@@ -174,30 +174,86 @@ registry:
 
 ## Examples
 
-### Basic Web Application
+### Fullstack App with Next.js, Prisma, and Postgres
 
 ```yaml
 application:
-  name: "web-app"
+  name: hello-world-nextjs    # Required: Application name (lowercase, alphanumeric, '-', '.')
+  url: <% URL %>              # Optional: Custom domain URL (omit if not needed)
+  registryLogin:              # Optional: Required only for private images (Docker Hub assumed by default)
+    registry: myregistry.com  # Required if registryLogin present: Registry hostname
+    username: myusername      # Required if registryLogin present: Registry username
+    personalAccessToken: myaccesstoken  # Required if registryLogin present: Read-only registry PAT
 
-pods:
-  - name: frontend
-    image: nginx:latest
+  pods:  # Required: List of pod configurations
+  - name: web-app           # Required: Pod name (lowercase, alphanumeric, '-', '.')
     path: /
-    servicePorts:
-      - 80
-    vars:
-      API_URL: http://api.pod:3000
+    image: <% REGISTRY %>/nextjs/app:latest  # Required: Full image URL following <registry>/repo:<tag> format
+    volumes:  # Optional: List of persistent storage volumes
+    - name: nextjs-cache    # Required: Volume name (lowercase, alphanumeric, '-')
+      size: 1Gi             # Required: Volume size (e.g., "1Gi", "500Mi")
+      mountPath: /app/.next/cache  # Required: Volume mount path (must start with '/')
+    
+    secrets:  # Optional: List of secret configurations
+    - name: nextauth-secret  # Required: Secret name (lowercase, alphanumeric, '-')
+      data: myrandomsecret   # Required: Raw or Base64-encoded secret content
+      mountPath: /var/secrets/nextauth  # Required: Secret mount path (must start with '/')
+      fileName: secret.txt   # Required: Secret file name
+    
+    vars:  # Optional: Environment variables
+    - key: API_URL
+      value: http://backend.pod:3001  # Reference another pod dynamically
+    - key: NEXTAUTH_URL
+      value: http://web-app.pod:3000
+    - key: DATABASE_URL
+      value: postgresql://postgres:postgres@database.pod:5432/mydb
+    - key: NEXTAUTH_SECRET
+      value: <% URL %>/secrets/nextauth
+    - key: GITHUB_CLIENT_ID
+      value: ${GITHUB_CLIENT_ID}  # GitHub OAuth Client ID (stored securely)
+    - key: GITHUB_CLIENT_SECRET
+      value: ${GITHUB_CLIENT_SECRET}  # GitHub OAuth Client Secret
+    
+    servicePorts:  # Required: List of port configurations (shorthand supported)
+    - 3000  # Exposing Next.js frontend on port 3000
 
-  - name: api
-    image: node:16
-    servicePorts:
-      - 3000
+  - name: backend  # Required: Backend service (Next.js API routes)
+    image: <% REGISTRY %>/node/api:latest
+    volumes:
+    - name: prisma-migrations
+      size: 1Gi
+      mountPath: /app/prisma/migrations
     vars:
-      DATABASE_URL: postgresql://db.pod:5432/app
+    - key: DATABASE_URL
+      value: postgresql://postgres:postgres@database.pod:5432/mydb
+    - key: NEXTAUTH_SECRET
+      value: <% URL %>/secrets/nextauth
+    - key: GITHUB_CLIENT_ID
+      value: ${GITHUB_CLIENT_ID}
+    - key: GITHUB_CLIENT_SECRET
+      value: ${GITHUB_CLIENT_SECRET}
+    servicePorts:
+    - 3001  # Exposing backend API on port 3001
+
+  - name: database  # Required: PostgreSQL database pod
+    image: <% REGISTRY %>/postgres:latest
+    volumes:
+    - name: postgres-data
+      size: 5Gi
+      mountPath: /var/lib/postgresql/data
+    vars:
+    - key: POSTGRES_USER
+      value: postgres
+    - key: POSTGRES_PASSWORD
+      value: postgres
+    - key: POSTGRES_DB
+      value: mydb
+    servicePorts:
+    - 5432  # Exposing PostgreSQL database on port 5432
+
 ```
 
-# Example Full-Stack AI-Powered Web Application Architecture
+# Example Fullstack AI-Powered Web Application Architecture
 
 A typical AI-powered application consists of:
 

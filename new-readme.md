@@ -252,11 +252,11 @@ application:
     - 5432  # Exposing PostgreSQL database on port 5432
 
 ```
-| **Pod Name**  | **Exposed Port(s)** | **Intended Service**                | **Consistent?** |
-|--------------|------------------|--------------------------------|--------------|
-| `web-app`   | `3000`            | Next.js frontend               | ✅ Yes |
-| `backend`   | `3001`            | API backend (Next.js API routes) | ✅ Yes |
-| `database`  | `5432`            | PostgreSQL database            | ✅ Yes |
+| **Pod Name**  | **Exposed Port(s)** | **Intended Service**                
+|--------------|------------------|--------------------------------|
+| `web-app`   | `3000`            | Next.js frontend               | 
+| `backend`   | `3001`            | API backend (Next.js API routes) | 
+| `database`  | `5432`            | PostgreSQL database            | 
 
 ### 📌 Port Explanation:
 - **Frontend (`web-app`)**: Uses **port `3000`**, which is standard for **Next.js apps**.
@@ -420,15 +420,15 @@ pods:
 - **Web App → Redis:** Caches results `(web-app → redis.pod:6379)`  
 - **Data Worker → MinIO:** Processes large datasets `(data-worker → minio.pod:9000)`
 
-| **Pod Name**      | **Exposed Port(s)** | **Intended Service**                     | **Consistent?** |
-|------------------|------------------|---------------------------------|--------------|
-| `web-app`       | `3000`            | Next.js frontend & API           | ✅ Yes |
-| `ai-model`      | `5000`            | AI model inference service       | ✅ Yes |
-| `data-worker`   | `4000`            | Data processing worker           | ✅ Yes |
-| `vector-db`     | `8080`            | Vector embeddings database       | ✅ Yes |
-| `redis`        | `6379`            | Caching & message queue          | ✅ Yes |
-| `postgres`      | `5432`            | Relational database (PostgreSQL) | ✅ Yes |
-| `minio`        | `9000, 9001`      | Object storage & UI console      | ✅ Yes |
+| **Pod Name**      | **Exposed Port(s)** | **Intended Service**        | 
+|------------------|------------------|---------------------------------|
+| `web-app`       | `3000`            | Next.js frontend & API           | 
+| `ai-model`      | `5000`            | AI model inference service       | 
+| `data-worker`   | `4000`            | Data processing worker           | 
+| `vector-db`     | `8080`            | Vector embeddings database       | 
+| `redis`        | `6379`            | Caching & message queue          | 
+| `postgres`      | `5432`            | Relational database (PostgreSQL) | 
+| `minio`        | `9000, 9001`      | Object storage & UI console      | 
 
 ### 📌 Port Explanation:
 - **Frontend (`web-app`)**: Uses **port `3000`**, standard for **Next.js frontend & API**.

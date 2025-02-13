@@ -2,8 +2,8 @@
 
 # 🚀 What is Nexlayer?
 
-Nexlayer is a simplified an AI-powered kubernetes cloud platform that enables seamless deployments through a specialized YAML template schema. 
-It's designed for startups, developers, creators and AI agents, making complex production deployments accessible without deep cloud infrastructure expertise.
+Nexlayer is an AI-powered kubernetes cloud platform that enables seamless scalable deployments through a specialized YAML template schema. 
+It's designed for startups, developers, creators and AI agents, making complex production deployments simple and accessible without deep cloud infrastructure expertise.
 
 ## ✨ Key Features
 

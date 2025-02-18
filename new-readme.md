@@ -471,13 +471,11 @@ pods:
 
 ## Need Help?
 
-- 📚 [Official Documentation](https://docs.nexlayer.com)
-- 💬 [Community Support](https://community.nexlayer.com)
-- 🐛 [Bug Reports](https://github.com/nexlayer/issues)
+- 📚 [Official Documentation](https://github.com/Nexlayer/templates/)
+- 💬 [Community](https://github.com/orgs/Nexlayer/discussions)
+- 🐛 [Issues/Feedback](https://github.com/Nexlayer/templates/issues)
 
 ---
 
 Made with ❤️ by the Nexlayer Team
 ```
-
-This README provides a comprehensive guide for developers to start using Nexlayer YAML Templates quickly and efficiently. It covers all the essential aspects of the template structure, configuration options, and best practices, making it accessible for developers of all skill levels.

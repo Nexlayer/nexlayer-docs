@@ -32,6 +32,63 @@ Nexlayer is an AI-powered Kubernetes cloud platform that enables seamless scalab
 11. [Best Practices](#best-practices)
 12. [Need Help?](#need-help)
 
+## Cheatsheet
+
+| Top-Level Keys | Definition | Why it matters | Examples |
+|----------------|------------|----------------|----------|
+| application    | The top-level container for your deployment configuration. | It's the "big box" where you put everything about your app. | application: name: "my-app" |
+| name (application level) | The overall name (unique identifier) for your application. | Helps you track your app on Nexlayer. | name: "my-app" |
+| url (optional) | A permanent domain URL for your app. | Creates a URL for your app. | url: "https://myapp.customdomain.com" |
+| registryLogin (optional) | Authentication details for private container registries. | Ensures your app can pull private images. | registryLogin: registry: "registry.example.com" |
+| pods | A list that contains all your individual pod configurations. | Each pod is a key part of your app. | pods: - name: "pod1" |
+| pod | Each pod within the pods array represents an independent microservice of your application. | Each pod must work for your app to run. | pod: name: "my-database" |
+| image | Specifies the Docker container image. | Tells Nexlayer which pre-built container to use. | image: "postgres:latest" |
+| servicePorts | Defines the ports for external access or inter-service communication. | These ports are like the doorways that let users or other services in. | servicePorts: - 5432 |
+| vars | Runtime configuration settings and secrets management. | These are the settings that tell your app how to connect to databases, APIs, and more. | vars: - key: "DATABASE_URL" |
+| path | For web-facing pods, defines the external URL route where users access the service. | Sets the web address path where users access your service. | path: "/" |
+| volumes | Optional persistent storage settings that ensure data isn't lost. | Volumes are like cloud hard drives for your app. | volumes: - name: "postgres-data" |
+| mountPath | Within a volume configuration, specifies the internal file system location where the volume attaches. | Tells Nexlayer exactly where to place your volume. | mountPath: "/var/lib/postgresql" |
+| secrets | Securely mount sensitive data such as API keys or configuration files. | Keeps your passwords and keys safe. | secrets: - name: "nextauth-secret" |
+
+## Structure
+
+```
+application
+├── name: "my-app"
+├── url (optional): "https://myapp.customdomain.com"
+├── registryLogin (optional)
+│   ├── registry: "registry.example.com"
+│   ├── username: "myuser"
+│   └── personalAccessToken: "mypat123"
+└── pods
+    ├── Pod 1
+    │   ├── name: "pod-1-name"
+    │   ├── image: "docker/image:tag"
+    │   ├── path (optional): "/"
+    │   ├── servicePorts: [port1, port2]
+    │   ├── vars (optional)
+    │   │   ├── key: VALUE
+    │   │   └── key: VALUE
+    │   ├── volumes (optional)
+    │   │   ├── name: "volume-name"
+    │   │   ├── size: "XGi"
+    │   │   └── mountPath: "/path"
+    │   ├── secrets (optional)
+    │   │   ├── name: "secret-name"
+    │   │   ├── data: "secret-data"
+    │   │   ├── mountPath: "/secret/path"
+    │   │   └── fileName: "secret.txt"
+    │   ├── command/entrypoint (optional): "custom command"
+    │   └── resources (optional)
+    │       ├── cpu: "value"
+    │       └── memory: "value"
+    └── Pod 2
+        └── (similar structure as Pod 1)
+```
+
+
+
+
 ## Basic Structure
 
 Nexlayer base YAML template structure follows this pattern:

@@ -53,7 +53,7 @@ application:
 
 ### Step 3: Deploy it!
 
-That's it! You just deployed a web server to Nexlayer. Let's understand what you did...
+That's it! You just deployed a web service to Nexlayer. Let's understand what you did...
 
 ## 🧩 YAML Building Blocks
 

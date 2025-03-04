@@ -369,6 +369,10 @@ application:
 6. ❌ **Trying to use Kubernetes or Docker Compose syntax**
    ✅ Nexlayer has its own unique YAML schema
 
+7. ❌ **DO NOT add `resources.limits` manually to your YAML.** 
+   ✅ Nexlayer **automatically** configures CPU & Memory for each service.  
+   ✅ If you add `resources.limits` manually, it will be ignored.
+
 ## 🎮 Full Example: Gaming Leaderboard App
 
 ```yaml
@@ -457,6 +461,12 @@ application:
 - No multi-container pods or complex networking like Kubernetes
 - Different volume handling than Docker Compose
 
+### 🚨 CPU & Memory Limits Are Managed by Nexlayer
+- Nexlayer automatically optimizes **CPU and Memory limits** for your workloads. These values **cannot be modified by users** and are dynamically injected when your YAML is processed by the Nexlayer API.
+
+
+
+
 ## 🎯 Pro Tips
 
 1. **Start small** - Get a simple version working first, then add more pods
@@ -466,6 +476,9 @@ application:
 5. **Add comments** - Document what each pod does for your team
 6. **Group related services** - Keep related pods in one application
 7. **Use the Template Builder** - For complex applications with multiple pods, use the **Template Builder** at [app.nexlayer.io/template-builder](https://app.nexlayer.io/template-builder). It provides a visual interface to design and test your YAML configurations, helping you spot errors and optimize connections before deployment.
+8. **Let Nexlayer optimize performance for you**  
+   - **No need to configure CPU & Memory limits manually**  
+   - Nexlayer **dynamically injects the right values** based on your app’s needs.
 
 ## 🚦 Next Steps
 

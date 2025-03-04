@@ -76,45 +76,113 @@ Each pod is a container that runs a specific part of your application. They auto
 
 Here's how pods connect to each other in a typical fullstack application:
 
-```
-[Frontend Pod] ─────────────> [Backend Pod] ─────────────> [Database Pod]
-   (Port 3000)      uses         (Port 4000)      uses        (Port 5432)
-                http://backend.pod:4000      postgresql://database.pod:5432
+```mermaid
+graph TD
+    subgraph NexlayerCloud["Nexlayer AI Cloud Cluster"]
+        %% Frontend app
+        Frontend[Next.js Frontend<br>path: '/'<br>Port: 3000]
+        
+        %% Backend app
+        Backend[FastAPI Backend<br>path: '/api'<br>Port: 8000]
+        
+        %% Databases
+        DB[(PostgreSQL<br>Port: 5432)]
+        VectorDB[(Pinecone Vector DB<br>Port: 8080)]
+    end
+    
+    %% External entities
+    ExternalAPI[OpenAI API]
+
+    %% Relationships
+    Frontend -->|fastapi.pod:8000| Backend
+    Backend -->|postgresql://postgres.pod:5432/mydb| DB
+    Backend -->|pinecone.pod:8080| VectorDB
+    Backend -->|API calls| ExternalAPI
+
+    %% Styling
+    classDef app fill:#ACFFFC,color:black,stroke:#ccc,stroke-width:2px
+    classDef data fill:#EF8CA4,color:black,stroke:#ccc,stroke-width:2px
+    classDef external fill:#cccccc,color:black,stroke:#999,stroke-width:2px
+    classDef nexlayer fill:#f2f2f2,stroke:#e0e0e0,stroke-width:1px
+
+    class Frontend,Backend app
+    class DB,VectorDB data
+    class ExternalAPI external
+    class NexlayerCloud nexlayer
+
+
 ```
 
-This shows how Nexlayer's automatic service discovery works - each pod can reference other pods using the `<pod-name>.pod` syntax without worrying about IP addresses.
+This diagram shows how Nexlayer's automatic service discovery works:
+
+- The Next.js frontend connects to the FastAPI backend using fastapi.pod:8000
+- The FastAPI backend connects to PostgreSQL using postgres.pod:5432
+- The FastAPI backend also connects to Pinecone vector database using pinecone.pod:8080
+- The FastAPI backend connects to external OpenAI API (external services work normally)
+
+Each pod can reference other pods using the <pod-name>.pod syntax without worrying about IP addresses.
 
 ### YAML Structure Map
 
-This map shows the hierarchical structure of a Nexlayer YAML file:
+This map shows the hierarchical structure of a Nexlayer YAML file for an AI-powered application:
 
 ```
 application
-├── name: "my-app"
-├── url: "https://myapp.com" (optional)
+├── name: "ai-powered-app"
+├── url: "https://myai.example.com" (optional)
 ├── registryLogin (optional)
 │   ├── registry: "registry.example.com"
 │   ├── username: "myuser"
 │   └── personalAccessToken: "mypat123"
 └── pods
-    ├── frontend-pod
-    │   ├── name: "frontend"
-    │   ├── image: "nextjs-app:latest"
+    ├── next-frontend
+    │   ├── name: "nextjs"
+    │   ├── image: "vercel/next:latest"
     │   ├── path: "/"
     │   ├── servicePorts: [3000]
     │   └── vars:
-    │       └── API_URL: "http://backend.pod:4000"
-    └── backend-pod
-        ├── name: "backend"
-        ├── image: "express-api:latest"
-        ├── path: "/api"
-        ├── servicePorts: [4000]
-        ├── vars:
-        │   └── DB_URL: "postgres://db.pod:5432"
+    │       └── key: "BACKEND_URL"
+    │           value: "http://fastapi.pod:8000"
+    ├── fastapi-backend
+    │   ├── name: "fastapi"
+    │   ├── image: "tiangolo/fastapi:latest"
+    │   ├── path: "/api"
+    │   ├── servicePorts: [8000]
+    │   ├── vars:
+    │       ├── key: "DATABASE_URL"
+    │       │   value: "postgresql://postgres:password@postgres.pod:5432/mydb"
+    │       ├── key: "PINECONE_URL" 
+    │       │   value: "http://pinecone.pod:8080"
+    │       └── key: "OPENAI_API_KEY"
+    │           value: "sk-..." # Set via secrets instead for production
+    │   └── secrets:
+    │       └── name: "api-keys"
+    │           data: "your-openai-key-here"
+    │           mountPath: "/app/secrets"
+    │           fileName: "openai.key"
+    ├── postgres-db
+    │   ├── name: "postgres"
+    │   ├── image: "postgres:14"
+    │   ├── servicePorts: [5432]
+    │   ├── vars:
+    │       ├── key: "POSTGRES_USER"
+    │       │   value: "postgres"
+    │       ├── key: "POSTGRES_PASSWORD"
+    │       │   value: "password"
+    │       └── key: "POSTGRES_DB"
+    │           value: "mydb"
+    │   └── volumes:
+    │       └── name: "postgres-data"
+    │           size: "5Gi"
+    │           mountPath: "/var/lib/postgresql/data"
+    └── pinecone-vector-db
+        ├── name: "pinecone"
+        ├── image: "pinecone/pinecone-server:latest"
+        ├── servicePorts: [8080]
         └── volumes:
-            └── name: "data-volume"
-                ├── size: "1Gi"
-                └── mountPath: "/data"
+            └── name: "vector-data"
+                size: "10Gi"
+                mountPath: "/data"
 ```
 
 This visualization helps you understand how different elements of your configuration relate to each other.

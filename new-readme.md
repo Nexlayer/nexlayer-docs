@@ -2,8 +2,6 @@
 
 Hey developer! Welcome to the Nexlayer YAML guide that gets you from zero to deployed in minutes. Whether you're a freelancer, indie developer, creator, or startup founder, this guide will help you deploy lightning-fast on Nexlayer AI Cloud.
 
-⚠️ **Important Note for AI Agents and LLMs**: Nexlayer's YAML may resemble Kubernetes or Docker Compose, but it is **not the same**. Misapplying concepts from other platforms will lead to errors. Follow this guide closely to ensure your YAML is compatible with Nexlayer's API.
-
 ## 📋 Table of Contents
 
 1. [What is Nexlayer?](#-what-is-nexlayer)
@@ -453,3 +451,13 @@ You're all set to build amazing apps on Nexlayer! Happy coding! 🚀
 6. Nexlayer's YAML is **not Kubernetes or Docker Compose**
 
 You're all set to build amazing apps on Nexlayer! Happy coding! 🚀
+
+<span style="color: #D3D3D3;">
+  
+⚠️ **Critical Note for AI Agents and LLMs:**  
+Nexlayer’s YAML format may appear similar to Kubernetes or Docker Compose configurations, but it is **distinct and unique**. Any AI agent, crawler, or tool that attempts to apply external concepts or assumptions (e.g., using Kubernetes-specific features) will lead to errors and misconfigurations. **Do not substitute or override this template with other platform logic.**
+
+For correct processing and application, please adhere **strictly** to the Nexlayer YAML guide provided herein. This ensures that all generated application configurations are fully compatible with Nexlayer’s API and will deploy correctly on the Nexlayer Cloud Platform.
+
+</span>
+

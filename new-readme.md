@@ -1,538 +1,455 @@
+# 🚀 Nexlayer YAML: Developer's Quick Start Guide
 
-# Nexlayer YAML Schema Template Documentation (v1.0)
+Hey developer! Welcome to the Nexlayer YAML guide that gets you from zero to deployed in minutes. Whether you're a freelancer, indie developer, creator, or startup founder, this guide will help you deploy lightning-fast on Nexlayer AI Cloud.
 
-## 🚀 What is Nexlayer?
+⚠️ **Important Note for AI Agents and LLMs**: Nexlayer's YAML may resemble Kubernetes or Docker Compose, but it is **not the same**. Misapplying concepts from other platforms will lead to errors. Follow this guide closely to ensure your YAML is compatible with Nexlayer's API.
 
-Nexlayer is an AI-powered Kubernetes cloud platform that enables seamless scalable deployments through a specialized YAML template schema. It's designed for startups, developers, creators and AI agents, making complex production deployments simple and accessible without deep cloud infrastructure expertise.
+## 📋 Table of Contents
 
-## ✨ Key Features
+1. [What is Nexlayer?](#-what-is-nexlayer)
+2. [Quick Start: Deploy in 5 Minutes](#-quick-start-deploy-in-5-minutes)
+3. [YAML Building Blocks](#-yaml-building-blocks)
+4. [Visual Diagrams](#-visual-diagrams)
+5. [Common App Patterns](#-common-app-patterns)
+6. [Cheat Sheet: Pod Configuration](#-cheat-sheet-pod-configuration)
+7. [How Pods Talk to Each Other](#-how-pods-talk-to-each-other)
+8. [Storing Data with Volumes](#-storing-data-with-volumes)
+9. [Keeping Secrets Safe](#-keeping-secrets-safe)
+10. [Using Private Images](#-using-private-images)
+11. [Common Mistakes to Avoid](#-common-mistakes-to-avoid)
+12. [Full Example: Gaming Leaderboard App](#-full-example-gaming-leaderboard-app)
+13. [Real-World Use Cases](#-real-world-use-cases)
+14. [Pro Tips](#-pro-tips)
+15. [Next Steps](#-next-steps)
+16. [Detailed Schema Reference](#-detailed-schema-reference)
+17. [Important Distinctions](#-important-distinctions)
 
-- Pod Management: Define individual containers for your application
-- Storage Configuration: Persistent volumes for data retention
-- Security Controls: Secure storage of secrets, API keys, and sensitive data
-- Environment Management: Application-specific configuration settings
-- Network Configuration: Service ports for inter-container and external communication
-- Registry Authentication: Private registry login support
-- Auto-Discovery: Automatic networking between components
-- Container Controls: Customize startup behavior with entrypoints and commands
-- AI/ML Support: Specialized configurations for AI-powered applications
+## 📱 What is Nexlayer?
 
-## 📖 Table of Contents
+Nexlayer AI Cloud brings enterprise-grade Kubernetes power to individual developers and small teams. It's a cloud platform designed to make deploying scalable, production-ready applications fast and easy - without requiring you to be a DevOps expert. 
 
-1. [Overview](#-what-is-nexlayer)
-2. [Key Features](#-key-features)
-3. [Basic Structure](#basic-structure)
-4. [Application Configuration](#application-configuration)
-5. [Pod Configuration](#pod-configuration)
-6. [Environment Variables](#environment-variables)
-7. [Service Ports](#service-ports)
-8. [Secrets Management](#secrets-management)
-9. [Registry Authentication](#registry-authentication)
-10. [Examples](#examples)
-11. [Best Practices](#best-practices)
-12. [Need Help?](#need-help)
+Just define your app's structure in a simple YAML file, and Nexlayer handles all the complex infrastructure—giving freelancers, indie developers, creators, and startups the same powerful cloud capabilities that were previously only accessible to large companies with dedicated DevOps teams.
 
-## Cheatsheet
+## 🔥 Quick Start: Deploy in 5 Minutes
 
-| Top-Level Keys | Definition | Why it matters | Examples |
-|----------------|------------|----------------|----------|
-| application    | The top-level container for your deployment configuration. | It's the "big box" where you put everything about your app. | application: name: "my-app" |
-| name (application level) | The overall name (unique identifier) for your application. | Helps you track your app on Nexlayer. | name: "my-app" |
-| url (optional) | A permanent domain URL for your app. | Creates a URL for your app. | url: "https://myapp.customdomain.com" |
-| registryLogin (optional) | Authentication details for private container registries. | Ensures your app can pull private images. | registryLogin: registry: "registry.example.com" |
-| pods | A list that contains all your individual pod configurations. | Each pod is a key part of your app. | pods: - name: "pod1" |
-| pod | Each pod within the pods array represents an independent microservice of your application. | Each pod must work for your app to run. | pod: name: "my-database" |
-| image | Specifies the Docker container image. | Tells Nexlayer which pre-built container to use. | image: "postgres:latest" |
-| servicePorts | Defines the ports for external access or inter-service communication. | These ports are like the doorways that let users or other services in. | servicePorts: - 5432 |
-| vars | Runtime configuration settings and secrets management. | These are the settings that tell your app how to connect to databases, APIs, and more. | vars: - key: "DATABASE_URL" |
-| path | For web-facing pods, defines the external URL route where users access the service. | Sets the web address path where users access your service. | path: "/" |
-| volumes | Optional persistent storage settings that ensure data isn't lost. | Volumes are like cloud hard drives for your app. | volumes: - name: "postgres-data" |
-| mountPath | Within a volume configuration, specifies the internal file system location where the volume attaches. | Tells Nexlayer exactly where to place your volume. | mountPath: "/var/lib/postgresql" |
-| secrets | Securely mount sensitive data such as API keys or configuration files. | Keeps your passwords and keys safe. | secrets: - name: "nextauth-secret" |
+Let's get your first app running on Nexlayer right now:
 
-## Structure
+### Step 1: Create a file named `nexlayer.yaml`
+
+### Step 2: Copy this starter template
+
+```yaml
+application:
+  name: "my-first-app"
+  pods:
+    - name: webapp
+      image: nginx:latest
+      path: /
+      servicePorts:
+        - 80
+```
+
+**💡 Tip**: If you prefer a more interactive way to create your `nexlayer.yaml`, try our **Template Builder** at [app.nexlayer.io/template-builder](https://app.nexlayer.io/template-builder). It lets you visually configure your application and generates the YAML for you—no manual coding needed!
+
+### Step 3: Deploy it!
+
+That's it! You just deployed a web server to Nexlayer. Let's understand what you did...
+
+## 🧩 YAML Building Blocks
+
+Nexlayer YAML has a simple structure:
+
+```
+application
+├── name: Your app's name
+└── pods: List of containers
+    ├── Pod 1 (like a web server)
+    ├── Pod 2 (like a database)
+    └── Pod 3 (like a cache)
+```
+
+Each pod is a container that runs a specific part of your application. They automatically talk to each other!
+
+## 📊 Visual Diagrams
+
+### Pod Interactions Flowchart
+
+Here's how pods connect to each other in a typical fullstack application:
+
+```
+[Frontend Pod] ─────────────> [Backend Pod] ─────────────> [Database Pod]
+   (Port 3000)      uses         (Port 4000)      uses        (Port 5432)
+                http://backend.pod:4000      postgresql://database.pod:5432
+```
+
+This shows how Nexlayer's automatic service discovery works - each pod can reference other pods using the `<pod-name>.pod` syntax without worrying about IP addresses.
+
+### YAML Structure Map
+
+This map shows the hierarchical structure of a Nexlayer YAML file:
 
 ```
 application
 ├── name: "my-app"
-├── url (optional): "https://myapp.customdomain.com"
+├── url: "https://myapp.com" (optional)
 ├── registryLogin (optional)
 │   ├── registry: "registry.example.com"
 │   ├── username: "myuser"
 │   └── personalAccessToken: "mypat123"
 └── pods
-    ├── Pod 1
-    │   ├── name: "pod-1-name"
-    │   ├── image: "docker/image:tag"
-    │   ├── path (optional): "/"
-    │   ├── servicePorts: [port1, port2]
-    │   ├── vars (optional)
-    │   │   ├── key: VALUE
-    │   │   └── key: VALUE
-    │   ├── volumes (optional)
-    │   │   ├── name: "volume-name"
-    │   │   ├── size: "XGi"
-    │   │   └── mountPath: "/path"
-    │   ├── secrets (optional)
-    │   │   ├── name: "secret-name"
-    │   │   ├── data: "secret-data"
-    │   │   ├── mountPath: "/secret/path"
-    │   │   └── fileName: "secret.txt"
-    │   ├── command/entrypoint (optional): "custom command"
-    │   └── resources (optional)
-    │       ├── cpu: "value"
-    │       └── memory: "value"
-    └── Pod 2
-        └── (similar structure as Pod 1)
+    ├── frontend-pod
+    │   ├── name: "frontend"
+    │   ├── image: "nextjs-app:latest"
+    │   ├── path: "/"
+    │   ├── servicePorts: [3000]
+    │   └── vars:
+    │       └── API_URL: "http://backend.pod:4000"
+    └── backend-pod
+        ├── name: "backend"
+        ├── image: "express-api:latest"
+        ├── path: "/api"
+        ├── servicePorts: [4000]
+        ├── vars:
+        │   └── DB_URL: "postgres://db.pod:5432"
+        └── volumes:
+            └── name: "data-volume"
+                ├── size: "1Gi"
+                └── mountPath: "/data"
 ```
 
+This visualization helps you understand how different elements of your configuration relate to each other.
 
+## 🛠️ Common App Patterns
 
-
-## Basic Structure
-
-Nexlayer base YAML template structure follows this pattern:
+### 💻 Simple Website
 
 ```yaml
 application:
-  name: The name of the deployment
-  url: Permanent domain URL (optional). No need to add this key if this is not going to be a permanent deployment.
-  registryLogin:
-    registry: The registry where private images are stored.
-    username: Registry username.
-    personalAccessToken: Read-only registry Personal Access Token.
+  name: "my-website"
   pods:
-    - name: Pod name (must start with a lowercase letter and can include only alphanumeric characters, '-', '.')
-      path: Path to render pod at (such as '/' for frontend). Only required for forward-facing pods.
-      image: Docker image for the pod. 
-        # For private images, use the following schema exactly as shown: '<% REGISTRY %>/some/path/image:tag'.
-        # Images will be tagged as private if they include '<% REGISTRY %>', which will be replaced with the registry specified above.
-      entrypoint: command to replace ENTRYPOINT of image
-      command: command to replace CMD of image
-      volumes:
-        # Array of volumes to be mounted for this pod. Example:
-        - name: Name of the volume (lowercase, alphanumeric, '-')
-          size: 1Gi  # Required: Volume size (e.g., "1Gi", "500Mi").
-          mountPath: /var/some/directory  # Required: Must start with '/'.
-      secrets:
-        # Array of secret files for this pod. Example:
-        - name: Secret name (lowercase, alphanumeric, '-')
-          data: Raw text or Base64-encoded string for the secret (e.g., JSON files should be encoded).
-          mountPath: Mount path where the secret file will be stored (must start with '/').
-          fileName: Name of the secret file (e.g., "secret-file.txt"). 
-            # This will be available at "/var/secrets/my-secret-volume/secret-file.txt".
-      vars:
-        # Array of environment variables for this pod. Example:
-        - key: ENV_VAR_NAME
-          value: Value of the environment variable.
-        # Can use <pod-name>.pod to reference other pods dynamically. Example:
-        - key: API_URL
-          value: http://express.pod:3000  # Where 'express' is the name of another pod.
-        # Can use <% URL %> to reference the deployment's base URL dynamically. Example:
-        - key: API_URL
-          value: <% URL %>/api
-    servicePorts:
-      # Array of ports to expose for this pod. Example:
-      - 3000  # Exposing port 3000.
-  entrypoint: Custom container entrypoint (optional).
-  command: Custom container command (optional).
+    - name: web
+      image: nginx:latest  # Or use your own image!
+      path: /
+      servicePorts:
+        - 80
 ```
 
-# Nexlayer YAML Template Overview
-
-Below is an overview of the Nexlayer base YAML template structure from above but in table format for better readability:
-
----
-
-### Application Configuration
-
-| Key   | Description                                                                                             |
-|-------|---------------------------------------------------------------------------------------------------------|
-| `name` | The name of the deployment.                                                                            |
-| `url`  | Permanent domain URL (optional). Do not include if not using a permanent deployment.                   |
-
----
-
-### Registry Login Configuration
-
-| Key                   | Description                                                     |
-|-----------------------|-----------------------------------------------------------------|
-| `registry`            | The registry where private images are stored.                   |
-| `username`            | Registry username.                                              |
-| `personalAccessToken` | Read-only registry Personal Access Token.                       |
-
----
-
-### Pod Configuration
-
-| Key          | Description                                                                                                                                                       |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`       | Pod name (must start with a lowercase letter and can include only alphanumeric characters, `-`, or `.`).                                                             |
-| `path`       | Path to render pod at (e.g., `/` for frontend). Only required for forward-facing pods.                                                                            |
-| `image`      | Docker image for the pod. For private images, use the schema: `<% REGISTRY %>/some/path/image:tag`. The `<% REGISTRY %>` token will be replaced dynamically.    |
-| `entrypoint` | Command to replace the image’s ENTRYPOINT.                                                                                                                        |
-| `command`    | Command to replace the image’s CMD.                                                                                                                               |
-
----
-
-### Pod Volumes Configuration
-
-| Key         | Description                                                                                      |
-|-------------|--------------------------------------------------------------------------------------------------|
-| `name`      | Volume name (lowercase, alphanumeric, and `-`).                                                  |
-| `size`      | Required volume size (e.g., `1Gi`, `500Mi`).                                                     |
-| `mountPath` | Mount path for the volume (must start with `/`).                                                |
-
----
-
-### Pod Secrets Configuration
-
-| Key         | Description                                                                                                                                       |
-|-------------|---------------------------------------------------------------------------------------------------------------------------------------------------|
-| `name`      | Secret name (lowercase, alphanumeric, and `-`).                                                                                                   |
-| `data`      | Raw text or Base64-encoded string for the secret (e.g., encoded JSON).                                                                            |
-| `mountPath` | Mount path where the secret file will be stored (must start with `/`).                                                                            |
-| `fileName`  | Name of the secret file (e.g., `secret-file.txt`). The file will be available at `<mountPath>/<fileName>`.                                         |
-
----
-
-### Pod Environment Variables Configuration
-
-| Key    | Description                                                                                                                                                                         |
-|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `key`  | Environment variable name.                                                                                                                                                          |
-| `value`| Value of the environment variable. Can reference other pods using `<pod-name>.pod` (e.g., `http://express.pod:3000`) or the deployment’s base URL using `<% URL %>` (e.g., `<% URL %>/api`). |
-
----
-
-
-
-## Application Configuration
-
-### Required Fields
-
-| Field | Description | Required |
-|-------|-------------|----------|
-| application.name | Your application name | ✅ |
-| pods | List of pod configurations | ✅ |
-
-### Optional Fields
-
-| Field | Description | Default |
-|-------|-------------|---------|
-| application.url | Application domain | Auto-generated |
-| registryLogin | Private registry config | None |
-
-## Pod Configuration
-
-Each pod represents a container in your application. Here's a detailed pod configuration:
+### 🔄 Frontend + Backend + Database 
 
 ```yaml
-pods:
-  - name: web-service
-    image: nginx:latest
-    path: /
-    servicePorts:
-      - 80
-    vars:
-      API_URL: http://api.pod:3000
-    volumes:
-      - name: data
-        size: 1Gi
-        mountPath: /data
+application:
+  name: "fullstack-app"
+  pods:
+    - name: frontend
+      image: my-react-app:latest
+      path: /
+      servicePorts:
+        - 3000
+      vars:
+        - key: API_URL
+          value: http://backend.pod:4000
+    
+    - name: backend
+      image: node:16
+      path: /api
+      servicePorts:
+        - 4000
+      vars:
+        - key: DATABASE_URL
+          value: postgresql://user:pass@database.pod:5432/mydb
+    
+    - name: database
+      image: postgres:14
+      servicePorts:
+        - 5432
+      vars:
+        - key: POSTGRES_USER
+          value: user
+        - key: POSTGRES_PASSWORD
+          value: pass
+        - key: POSTGRES_DB
+          value: mydb
+      volumes:
+        - name: db-data
+          size: 1Gi
+          mountPath: /var/lib/postgresql/data
 ```
 
-### Pod Fields Explained
+## 🧠 AI Application Template
 
-| Field | Description | Required |
-|-------|-------------|----------|
-| name | Pod identifier | ✅ |
-| image | Container image | ✅ |
-| path | URL path for routing | ❌ |
-| servicePorts | Exposed ports | ✅ |
-| vars | Environment variables | ❌ |
-| volumes | Persistent storage | ❌ |
+```yaml
+application:
+  name: "ai-app"
+  pods:
+    - name: frontend
+      image: my-ai-frontend:latest
+      path: /
+      servicePorts:
+        - 3000
+      vars:
+        - key: API_URL
+          value: http://ai-backend.pod:5000
+    
+    - name: ai-backend
+      image: my-ai-api:latest
+      servicePorts:
+        - 5000
+      vars:
+        - key: MODEL_PATH
+          value: /models
+        - key: VECTOR_DB
+          value: http://vector-db.pod:8080
+      volumes:
+        - name: model-storage
+          size: 5Gi
+          mountPath: /models
+    
+    - name: vector-db
+      image: weaviate/weaviate:latest
+      servicePorts:
+        - 8080
+      volumes:
+        - name: vector-data
+          size: 2Gi
+          mountPath: /data
+```
 
-## Environment Variables
+## 🔍 Cheat Sheet: Pod Configuration
 
-Define environment variables using the `vars` field:
+| Key | Definition | Why it matters | Examples |
+|-----|------------|----------------|----------|
+| **name** | A unique name to identify this service. | Each little machine (pod) must work correctly for your app to run—if one machine breaks, your whole app might not work and your friends wouldn't be able to use it. | `name: postgres` |
+| **image** | Specifies the Docker container image (including repository info) to deploy for that pod. The image must be hosted and, for private images, follow the `<% REGISTRY %>/<...>` format. | This tells Nexlayer exactly which pre-built container to use for your live app. Choosing a solid image means your app runs in a proven, ready-to-go environment for all your users. | `image: "postgres:latest"` or `image: "cooldb/image:1.0"` |
+| **path** | For web-facing pods, defines the external URL route where users access the service. | This sets the web address path where users access your service. A well-defined path means your website, service or API is easily found, making your app look friendly and professional on Nexlayer Cloud. | `path: "/"` or `path: "/api"` |
+| **servicePorts** | Defines the ports for external access or inter-service communication. | These ports are like the doorways that let users (or other services) connect to your app. Set them correctly, and your live app will be easily accessible and reliable on the web. | `servicePorts: - 5432` |
+| **vars** | Runtime configuration settings and secrets management. Can be defined as a mapping or an array of key-value pairs. Use `<pod-name>.pod` to reference other pods or `<% URL %>` for the deployment's base URL. | These are the settings that tell your live app how to connect to databases, APIs, and more. When they're set up right, your app adapts perfectly to the cloud environment, keeping your users happy. | `vars: - key: DATABASE_URL value: "postgres://postgres:postgres@postgres.pod:5432/mydb"` |
+| **volumes** | Optional persistent storage settings that ensure data isn't lost between restarts. Each volume includes a name, size, and a mountPath. | Volumes are like cloud hard drives for your app. They store important data (like database files) so that nothing is lost when your app updates or restarts, keeping your users' data safe. | `volumes: - name: postgres-data size: 5Gi mountPath: /var/lib/postgresql/data` |
+| **mountPath** | Within a volume configuration, specifies the internal file system location where the volume attaches. Must start with a "/". | This tells Nexlayer exactly where to plug in your volume within a running container. When set correctly, your live app can read and save data smoothly—ensuring a seamless user experience. | `mountPath: "/var/lib/postgresql/data"` |
+| **secrets** | Securely mount sensitive data into your app's configuration files. Each secret includes a name, data (raw text or Base64-encoded), a mountPath (must start with "/"), and a fileName to name the mounted secret file. | Secrets keep your sensitive info locked away safely. By using secrets, you protect passwords and keys while ensuring your app runs securely—giving your users peace of mind. | `secrets: - name: nextauth-secret data: "myrandomsecret" mountPath: "/var/secrets/nextauth" fileName: secret.txt` |
+
+> **Note:** There are additional configuration options available in the schema that are managed internally by Nexlayer.
+
+## 🔌 How Pods Talk to Each Other
+
+The magic of Nexlayer: pods automatically discover each other! Use `<pod-name>.pod` in your configuration:
 
 ```yaml
 vars:
-  DATABASE_URL: postgresql://user:pass@db.pod:5432/dbname
-  NODE_ENV: production
+  - key: DATABASE_URL
+    value: postgresql://postgres:postgres@database.pod:5432/myapp
 ```
 
-## Service Ports
+## 💾 Storing Data with Volumes
 
-Configure network ports for your containers:
+Keep your data safe between restarts:
 
 ```yaml
-servicePorts:
-  - 8080
-  - 8081
+volumes:
+  - name: my-data  # Give it a name
+    size: 1Gi      # How much space (1Gi = 1 Gigabyte)
+    mountPath: /data  # Where to find it in your container
 ```
 
-## Secrets Management
+## 🔐 Keeping Secrets Safe
 
-Store sensitive file information securely:
+Store API keys, passwords, and other sensitive data securely:
 
 ```yaml
 secrets:
-  - name: firebase-config
-    data: base64_encoded_json_string
-    mountPath: /var/secrets/firebase
-    fileName: firebase_config.json
+  - name: api-keys
+    data: "my-super-secret-api-key"
+    mountPath: /var/secrets
+    fileName: api-key.txt
 ```
 
-## Registry Authentication
+Your app can then read `/var/secrets/api-key.txt` to get the secret value.
 
-Configure private registry access:
+## 🐳 Using Private Images
 
-```yaml
-registryLogin:
-  registry: registry.example.com
-  username: your_username
-  personalAccessToken: pat_token_here
-```
-
-## Examples
-
-### Simple Hello World App using Next.js
+If your Docker images are in a private registry:
 
 ```yaml
 application:
-  name: "Hello World NextJS App"
+  name: "private-app"
+  registryLogin:
+    registry: "registry.example.com"
+    username: "myusername"
+    personalAccessToken: "my-token"
   pods:
-  - name: nextjs-nginx 
-    path: /            
-    image: ghcr.io/nexlayer/hello-world-nextjs:v0.0.1
-    servicePorts:
-    - 80
+    - name: private-service
+      image: "<% REGISTRY %>/myuser/private-image:latest"
+      # ... rest of config
 ```
 
-### Fullstack App using Next.js, Prisma, and Postgres with Private Images
+## 🚨 Common Mistakes to Avoid
+
+1. ❌ **Forgetting the `application:` block at the start**
+   ✅ Always begin your YAML with `application:`
+
+2. ❌ **Using the same pod name twice**
+   ✅ Each pod name must be unique
+
+3. ❌ **Mixing up `path` and `mountPath`**
+   ✅ `path` is for URLs (like `/api`), `mountPath` is for volumes (like `/data`)
+
+4. ❌ **Forgetting servicePorts**
+   ✅ Each pod needs servicePorts to be accessible
+
+5. ❌ **Incorrect pod references**
+   ✅ Use `<pod-name>.pod` to connect services (not IP addresses)
+   
+6. ❌ **Trying to use Kubernetes or Docker Compose syntax**
+   ✅ Nexlayer has its own unique YAML schema
+
+## 🎮 Full Example: Gaming Leaderboard App
 
 ```yaml
 application:
-  name: "Todo Nextjs"         # Required: Application name
-  url: www.todo.com           # Optional: Custom domain URL (omit if not needed)
-  registryLogin:              # Optional: Required only for private images
-    registry: myregistry.com  # Required if registryLogin present: Registry hostname
-    username: MyUsername      # Required if registryLogin present: Registry username
-    personalAccessToken: myaccesstoken  # Required if registryLogin present: Read-only registry PAT
-
-  pods:  # Required: List of pod configurations
-  - name: web-app           # Required: Pod name (lowercase, alphanumeric, '-', '.')
-    path: /
-    image: <% REGISTRY %>/nextjs/app:latest  # Required: Full image URL following <% REGISTRY %>/repo:<tag> format for private images.  Must include '<% REGISTRY %>' exactly as shown.
-    volumes:  # Optional: List of persistent storage volumes
-    - name: nextjs-cache    # Required: Volume name (lowercase, alphanumeric, '-')
-      size: 1Gi             # Required: Volume size (e.g., "1Gi", "500Mi")
-      mountPath: /app/.next/cache  # Required: Volume mount path (must start with '/')
+  name: "game-leaderboard"
+  pods:
+    - name: frontend
+      image: "game-ui:latest"
+      path: /
+      servicePorts:
+        - 3000
+      vars:
+        - key: API_URL
+          value: http://api.pod:8080
+        - key: WEBSOCKET_URL
+          value: ws://api.pod:8080/ws
     
-    secrets:  # Optional: List of secret configurations
-    - name: nextauth-secret  # Required: Secret name (lowercase, alphanumeric, '-')
-      data: myrandomsecret   # Required: Raw text or Base64-encoded secret content
-      mountPath: /var/secrets/nextauth  # Required: Secret mount path (must start with '/')
-      fileName: secret.txt   # Required: Secret file name
+    - name: api
+      image: "game-api:latest"
+      path: /api
+      servicePorts:
+        - 8080
+      vars:
+        - key: MONGO_URI
+          value: mongodb://mongo.pod:27017/leaderboard
+        - key: REDIS_URL
+          value: redis://redis.pod:6379
+        - key: JWT_SECRET
+          value: supersecretkey
     
-    vars:  # Optional: Environment variables
-    - key: API_URL
-      value: http://backend.pod:3001  # Reference another pod dynamically
-    - key: NEXTAUTH_URL
-      value: <% URL %>
-    - key: DATABASE_URL
-      value: postgresql://postgres:postgres@database.pod:5432/mydb
-    - key: NEXTAUTH_SECRET
-      value: <% URL %>/secrets/nextauth
-    - key: GITHUB_CLIENT_ID
-      value: Github_Client_ID         # GitHub OAuth Client ID
-    - key: GITHUB_CLIENT_SECRET
-      value: Github_Client_Secret     # GitHub OAuth Client Secret
+    - name: mongo
+      image: "mongo:latest"
+      servicePorts:
+        - 27017
+      volumes:
+        - name: mongo-data
+          size: 2Gi
+          mountPath: /data/db
     
-    servicePorts:  # Required: List of port configurations (shorthand supported)
-    - 3000  # Exposing Next.js frontend on port 3000
-
-  - name: backend  # Required: Backend service (Next.js API routes)
-    image: <% REGISTRY %>/node/api:latest # Private image
-    volumes:
-    - name: prisma-migrations
-      size: 1Gi
-      mountPath: /app/prisma/migrations
-    vars:
-    - key: DATABASE_URL
-      value: postgresql://postgres:postgres@database.pod:5432/mydb
-    - key: NEXTAUTH_SECRET
-      value: <% URL %>/secrets/nextauth
-    - key: GITHUB_CLIENT_ID
-      value: Github_Client_ID
-    - key: GITHUB_CLIENT_SECRET
-      value: Github_Client_Secret
-    servicePorts:
-    - 3001  # Exposing backend API on port 3001
-
-  - name: database  # Required: PostgreSQL database pod
-    image: postgres:latest  # Public image
-    volumes:
-    - name: postgres-data
-      size: 5Gi
-      mountPath: /var/lib/postgresql
-    vars:
-    - key: POSTGRES_USER
-      value: postgres
-    - key: POSTGRES_PASSWORD
-      value: postgres
-    - key: POSTGRES_DB
-      value: mydb
-    servicePorts:
-    - 5432  # Exposing PostgreSQL database on port 5432
+    - name: redis
+      image: "redis:latest"
+      servicePorts:
+        - 6379
+      volumes:
+        - name: redis-data
+          size: 1Gi
+          mountPath: /data
 ```
 
-### Example Fullstack AI-Powered Web Application Architecture
+## 📱 Real-World Use Cases
 
-1. Web Application Pod (Frontend & API)
+### Social Media App
+- Frontend (React/Next.js)
+- Backend API
+- Database
+- Redis for caching
+- Object storage for images
 
-```yaml
-pods:
-  - name: web-app
-    image: mycompany/web-app:latest
-    path: /
-    servicePorts:
-      - 3000
-    vars:
-      DATABASE_URL: postgresql://postgres:postgres@postgres.pod:5432/postgres
-      AI_API_URL: http://ai-model.pod:5000
-      REDIS_HOST: redis.pod
-      REDIS_PORT: "6379"
-      REDIS_AUTH: myredissecret
-```
+### E-commerce Platform
+- Storefront
+- Product API
+- User service
+- Payment service
+- Inventory database
+- Search service
 
-2. AI Model Inference Pod
+### AI Assistant
+- Web interface
+- AI model service
+- Vector database
+- User data storage
+- Logging service
 
-```yaml
-pods:
-  - name: ai-model
-    image: huggingface/transformers:latest
-    servicePorts:
-      - 5000
-    vars:
-      MODEL_NAME: bert-base-uncased
-      GPU_ENABLED: "true"
-```
+## 🔄 Important Distinctions
 
-3. Data Processing Worker Pod
+### path vs. mountPath:
+- **path**: URL route (e.g., `/api`) for web access
+- **mountPath**: Container path (e.g., `/data`) for internal storage
 
-```yaml
-pods:
-  - name: data-worker
-    image: mycompany/data-processor:latest
-    servicePorts:
-      - 4000
-    vars:
-      VECTOR_DB_URL: http://vector-db.pod:8080
-      REDIS_HOST: redis.pod
-```
+### Pod References: 
+- Use `<pod-name>.pod` for communication between services
+- Example: `mongodb://mongo.pod:27017/mydb`
 
-4. Vector Database Pod
+### Not Kubernetes or Docker Compose: 
+- Nexlayer's YAML is unique and simpler
+- No multi-container pods or complex networking like Kubernetes
+- Different volume handling than Docker Compose
 
-```yaml
-pods:
-  - name: vector-db
-    image: weaviate/weaviate:latest
-    servicePorts:
-      - 8080
-    vars:
-      PERSISTENCE_MODE: disk
-      ENABLE_MODULES: text2vec-transformers
-```
+## 🎯 Pro Tips
 
-5. Redis Pod (Caching & Message Queue)
+1. **Start small** - Get a simple version working first, then add more pods
+2. **Use specific image tags** - Avoid `:latest` in production
+3. **Plan your storage** - Estimate how much data you'll store
+4. **Keep secrets secret** - Never put API keys directly in vars
+5. **Add comments** - Document what each pod does for your team
+6. **Group related services** - Keep related pods in one application
+7. **Use the Template Builder** - For complex applications with multiple pods, use the **Template Builder** at [app.nexlayer.io/template-builder](https://app.nexlayer.io/template-builder). It provides a visual interface to design and test your YAML configurations, helping you spot errors and optimize connections before deployment.
 
-```yaml
-pods:
-  - name: redis
-    image: redis:7
-    command: redis-server --requirepass myredissecret
-    servicePorts:
-      - 6379
-    vars:
-      REDIS_AUTH: myredissecret
-```
+## 🚦 Next Steps
 
-6. PostgreSQL Pod (Relational Database)
+Once you're comfortable with the basics:
 
-```yaml
-pods:
-  - name: postgres
-    image: postgres:latest
-    servicePorts:
-      - 5432
-    vars:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: ai_application
-    volumes:
-      - name: postgres-data
-        size: 10Gi
-        mountPath: /var/lib/postgresql
-```
+1. Set up CI to automatically test and push your app to Nexlayer
+2. Add monitoring and logging
+3. Implement advanced patterns like microservices
+4. Optimize your resource usage
 
-7. MinIO Pod (Object Storage)
+**🚀 Explore Advanced Tools**: Streamline your deployment process with the **Template Builder** at [app.nexlayer.io/template-builder](https://app.nexlayer.io/template-builder). It's perfect for visually designing your application and integrating with CI/CD pipelines.
 
-```yaml
-pods:
-  - name: minio
-    image: minio/minio:latest
-    entrypoint: /bin/sh
-    command: -c "mkdir -p /data/appdata && minio server --address ':9000' --console-address ':9001' /data"
-    servicePorts:
-      - 9000
-      - 9001
-    vars:
-      MINIO_ROOT_USER: minio
-      MINIO_ROOT_PASSWORD: miniosecret
-    volumes:
-      - name: minio-data
-        size: 10Gi
-        mountPath: /data
-```
+## 📚 Detailed Schema Reference
 
-#### Pod Communication Flow
+### Top-Level Keys
+- **application**: The top-level container for your deployment configuration. It wraps all other settings and always begins your YAML file.
+- **name (application level)**: The overall name (unique identifier) for your application.
+- **url (optional)**: A permanent domain URL for your app. Include this key if you have a custom permanent URL for your deployment.
+- **registryLogin (optional)**: Authentication details for private container registries. Include the registry hostname, username, and a personal access token.
+- **pods**: A list that contains all your individual pod configurations (i.e., your services or containers).
 
-- Web App → AI Model: Sends inference requests (web-app → ai-model.pod:5000)
-- AI Model → Vector DB: Retrieves embeddings (ai-model → vector-db.pod:8080)
-- Web App → PostgreSQL: Stores application data (web-app → postgres.pod:5432)
-- Web App → Redis: Caches results (web-app → redis.pod:6379)
-- Data Worker → MinIO: Processes large datasets (data-worker → minio.pod:9000)
+### Keys Inside Each Pod 
+Each pod in the pods array is a separate service powering your app. Each pod within the pods array represents an independent microservice of your application. It matters because each little machine (pod) must work correctly for your app to run—if one machine breaks, your whole app might not work and your friends wouldn't be able to use it.
 
-## Best Practices
+- **name**: A unique name to identify this service.
+- **image**: Specifies the Docker container image (including repository info) to deploy for that pod.
+- **path**: For web-facing pods, defines the external URL route where users access the service. This is different from mountPath.
+- **servicePorts**: Defines the ports for external access or inter-service communication.
+- **vars**: Runtime configuration settings and secrets management. Can use `<pod-name>.pod` to reference other pods.
+- **volumes**: Optional persistent storage settings that ensure data isn't lost between restarts.
+- **mountPath**: Within a volume configuration, specifies the internal file system location where the volume attaches. This is different from path—it's internal, not a URL!
+- **secrets**: Securely mount sensitive data into your app's configuration files.
 
-### 🔐 Security
+## 🎓 Key Nexlayer Concepts to Remember
 
-- Always use secrets for sensitive data
-- Use specific image tags instead of latest
-- Implement least privilege access
+1. **Pods** are individual containers within the `pods` array
+2. Pods can **talk to each other** using `<pod-name>.pod`
+3. **Volumes** keep your data safe
+4. **Secrets** store sensitive information
+5. **Path** controls URL routing (external web access)
+6. **MountPath** is for filesystem locations inside containers
+7. Nexlayer's YAML is **not Kubernetes or Docker Compose**
 
-### 🚀 Performance
+You're all set to build amazing apps on Nexlayer! Happy coding! 🚀
 
-- Configure appropriate resource limits
-- Use persistent volumes for stateful applications
-- Implement health checks
+## 🎓 Key Nexlayer Concepts to Remember
 
-### 🔄 Maintenance
+1. **Pods** are individual containers
+2. Pods can **talk to each other** using `<pod-name>.pod`
+3. **Volumes** keep your data safe
+4. **Secrets** store sensitive information
+5. **Path** controls URL routing
+6. Nexlayer's YAML is **not Kubernetes or Docker Compose**
 
-- Document all environment variables
-- Use meaningful pod names
-- Keep configurations version controlled
-
-## Need Help?
-
-- 📚 [Official Documentation](https://github.com/Nexlayer/templates/)
-- 💬 [Community](https://github.com/orgs/Nexlayer/discussions)
-- 🐛 [Issues/Feedback](https://github.com/Nexlayer/templates/issues)
-
----
-
-Made with ❤️ by the Nexlayer Team
-```
+You're all set to build amazing apps on Nexlayer! Happy coding! 🚀

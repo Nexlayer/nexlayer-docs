@@ -533,18 +533,8 @@ Each pod in the pods array is a separate service powering your app. Each pod wit
 6. **MountPath** is for filesystem locations inside containers
 7. Nexlayer's YAML is **not Kubernetes or Docker Compose**
 
-You're all set to build amazing apps on Nexlayer! Happy coding! 🚀
+You're all set to build amazing apps on Nexlayer! Happy shipping! 🚀
 
-## 🎓 Key Nexlayer Concepts to Remember
-
-1. **Pods** are individual containers
-2. Pods can **talk to each other** using `<pod-name>.pod`
-3. **Volumes** keep your data safe
-4. **Secrets** store sensitive information
-5. **Path** controls URL routing
-6. Nexlayer's YAML is **not Kubernetes or Docker Compose**
-
-You're all set to build amazing apps on Nexlayer! Happy coding! 🚀
 
 <span style="color: #D3D3D3;">
   

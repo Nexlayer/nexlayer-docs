@@ -384,6 +384,11 @@ application:
    ✅ Nexlayer **automatically** configures CPU & Memory for each service.  
    ✅ If you add `resources.limits` manually, it will be ignored.
 
+8. ❌ **Misunderstanding entrypoint and command behavior**
+   ✅ If entrypoint and command are explicitly defined in Docker Compose, the Nexlayer-CLI will translate them into Nexlayer YAML.
+   ✅ If they are not defined in Docker Compose, the Nexlayer-CLI omits them, defaulting to the Dockerfile's built-in values.
+
+
 ## 🎮 Full Example: Gaming Leaderboard App
 
 ```yaml

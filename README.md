@@ -311,9 +311,6 @@ application:
 | **mountPath** | Within a volume configuration, specifies the internal file system location where the volume attaches. Must start with a "/". | This tells Nexlayer exactly where to plug in your volume within a running container. When set correctly, your live app can read and save data smoothly—ensuring a seamless user experience. | `mountPath: "/var/lib/postgresql/data"` |
 | **secrets** | Securely mount sensitive data into your app's configuration files. Each secret includes a name, data (raw text or Base64-encoded), a mountPath (must start with "/"), and a fileName to name the mounted secret file. | Secrets keep your sensitive info locked away safely. By using secrets, you protect passwords and keys while ensuring your app runs securely—giving your users peace of mind. | `secrets: - name: nextauth-secret data: "myrandomsecret" mountPath: "/var/secrets/nextauth" fileName: secret.txt` |
 
-## 🔍 Cheat Sheet: Pod Configuration
-
-
 > **Note:** There are additional configuration options available in the schema that are managed internally by Nexlayer.
 
 ## 🔌 How Pods Talk to Each Other

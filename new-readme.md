@@ -73,10 +73,32 @@ Nexlayer YAML has a simple structure:
 ```
 application
 ├── name: Your app's name
+├── url: Your app's URL (optional)
+├── registryLogin (optional for private images)
 └── pods: List of containers
     ├── Pod 1 (like a web server)
+    │   ├── name: pod name
+    │   ├── image: container image
+    │   ├── path: web route
+    │   ├── servicePorts: exposed ports
+    │   │   └── - port number
+    │   ├── vars: environment variables
+    │   │   ├── ENV_VAR1: value1
+    │   │   └── ENV_VAR2: value2
+    │   ├── volumes: persistent storage
+    │   │   └── - name: volume name
+    │   │       ├── size: storage size
+    │   │       └── mountPath: storage location
+    │   └── secrets: sensitive data
+    │       └── - name: secret name
+    │           ├── data: secret content
+    │           ├── mountPath: secret location
+    │           └── fileName: secret file name
+    │
     ├── Pod 2 (like a database)
+    │   └── ...
     └── Pod 3 (like a cache)
+        └── ...
 ```
 
 Each pod is a container that runs a specific part of your application. They automatically talk to each other!
@@ -277,19 +299,20 @@ application:
           size: 2Gi
           mountPath: /data
 ```
-
 ## 🔍 Cheat Sheet: Pod Configuration
-
 | Key | Definition | Why it matters | Examples |
 |-----|------------|----------------|----------|
 | **name** | A unique name to identify this service. | Each little machine (pod) must work correctly for your app to run—if one machine breaks, your whole app might not work and your friends wouldn't be able to use it. | `name: postgres` |
 | **image** | Specifies the Docker container image (including repository info) to deploy for that pod. The image must be hosted and, for private images, follow the `<% REGISTRY %>/<...>` format. | This tells Nexlayer exactly which pre-built container to use for your live app. Choosing a solid image means your app runs in a proven, ready-to-go environment for all your users. | `image: "postgres:latest"` or `image: "cooldb/image:1.0"` |
 | **path** | For web-facing pods, defines the external URL route where users access the service. | This sets the web address path where users access your service. A well-defined path means your website, service or API is easily found, making your app look friendly and professional on Nexlayer Cloud. | `path: "/"` or `path: "/api"` |
 | **servicePorts** | Defines the ports for external access or inter-service communication. | These ports are like the doorways that let users (or other services) connect to your app. Set them correctly, and your live app will be easily accessible and reliable on the web. | `servicePorts: - 5432` |
-| **vars** | Runtime configuration settings and secrets management. Can be defined as a mapping or an array of key-value pairs. Use `<pod-name>.pod` to reference other pods or `<% URL %>` for the deployment's base URL. | These are the settings that tell your live app how to connect to databases, APIs, and more. When they're set up right, your app adapts perfectly to the cloud environment, keeping your users happy. | `vars: - key: DATABASE_URL value: "postgres://postgres:postgres@postgres.pod:5432/mydb"` |
+| **vars** | Runtime environment variables defined as direct key-value pairs. Use `<pod-name>.pod` to reference other pods or `<% URL %>` for the deployment's base URL. | These are the settings that tell your live app how to connect to databases, APIs, and more. When they're set up right, your app adapts perfectly to the cloud environment, keeping your users happy. | `vars:`<br>`  POSTGRES_USER: postgres`<br>`  POSTGRES_PASSWORD: password`<br>`  POSTGRES_DB: mydb`<br>`  API_URL: http://backend.pod:3000` |
 | **volumes** | Optional persistent storage settings that ensure data isn't lost between restarts. Each volume includes a name, size, and a mountPath. | Volumes are like cloud hard drives for your app. They store important data (like database files) so that nothing is lost when your app updates or restarts, keeping your users' data safe. | `volumes: - name: postgres-data size: 5Gi mountPath: /var/lib/postgresql/data` |
 | **mountPath** | Within a volume configuration, specifies the internal file system location where the volume attaches. Must start with a "/". | This tells Nexlayer exactly where to plug in your volume within a running container. When set correctly, your live app can read and save data smoothly—ensuring a seamless user experience. | `mountPath: "/var/lib/postgresql/data"` |
 | **secrets** | Securely mount sensitive data into your app's configuration files. Each secret includes a name, data (raw text or Base64-encoded), a mountPath (must start with "/"), and a fileName to name the mounted secret file. | Secrets keep your sensitive info locked away safely. By using secrets, you protect passwords and keys while ensuring your app runs securely—giving your users peace of mind. | `secrets: - name: nextauth-secret data: "myrandomsecret" mountPath: "/var/secrets/nextauth" fileName: secret.txt` |
+
+## 🔍 Cheat Sheet: Pod Configuration
+
 
 > **Note:** There are additional configuration options available in the schema that are managed internally by Nexlayer.
 

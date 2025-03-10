@@ -152,20 +152,16 @@ application
     │   ├── path: "/"
     │   ├── servicePorts: [3000]
     │   └── vars:
-    │       └── key: "BACKEND_URL"
-    │           value: "http://fastapi.pod:8000"
+    │       └── BACKEND_URL: "http://fastapi.pod:8000"
     ├── fastapi-backend
     │   ├── name: "fastapi"
     │   ├── image: "tiangolo/fastapi:latest"
     │   ├── path: "/api"
     │   ├── servicePorts: [8000]
     │   ├── vars:
-    │       ├── key: "DATABASE_URL"
-    │       │   value: "postgresql://postgres:password@postgres.pod:5432/mydb"
-    │       ├── key: "PINECONE_URL" 
-    │       │   value: "http://pinecone.pod:8080"
-    │       └── key: "OPENAI_API_KEY"
-    │           value: "sk-..." # Set via secrets instead for production
+    │       ├── DATABASE_URL: "postgresql://postgres:password@postgres.pod:5432/mydb"
+    │       ├── PINECONE_URL: "http://pinecone.pod:8080"
+    │       └── OPENAI_API_KEY: "sk-..." # Set via secrets instead for production
     │   └── secrets:
     │       └── name: "api-keys"
     │           data: "your-openai-key-here"
@@ -176,12 +172,9 @@ application
     │   ├── image: "postgres:14"
     │   ├── servicePorts: [5432]
     │   ├── vars:
-    │       ├── key: "POSTGRES_USER"
-    │       │   value: "postgres"
-    │       ├── key: "POSTGRES_PASSWORD"
-    │       │   value: "password"
-    │       └── key: "POSTGRES_DB"
-    │           value: "mydb"
+    │       ├── POSTGRES_USER: "postgres"
+    │       ├── POSTGRES_PASSWORD: "password"
+    │       └── POSTGRES_DB: "mydb"
     │   └── volumes:
     │       └── name: "postgres-data"
     │           size: "5Gi"
@@ -225,8 +218,7 @@ application:
       servicePorts:
         - 3000
       vars:
-        - key: API_URL
-          value: http://backend.pod:4000
+        API_URL: http://backend.pod:4000
     
     - name: backend
       image: node:16
@@ -234,20 +226,16 @@ application:
       servicePorts:
         - 4000
       vars:
-        - key: DATABASE_URL
-          value: postgresql://user:pass@database.pod:5432/mydb
+        DATABASE_URL: postgresql://user:pass@database.pod:5432/mydb
     
     - name: database
       image: postgres:14
       servicePorts:
         - 5432
       vars:
-        - key: POSTGRES_USER
-          value: user
-        - key: POSTGRES_PASSWORD
-          value: pass
-        - key: POSTGRES_DB
-          value: mydb
+        POSTGRES_USER: user
+        POSTGRES_PASSWORD: pass
+        POSTGRES_DB: mydb
       volumes:
         - name: db-data
           size: 1Gi
@@ -266,18 +254,15 @@ application:
       servicePorts:
         - 3000
       vars:
-        - key: API_URL
-          value: http://ai-backend.pod:5000
+        API_URL: http://ai-backend.pod:5000
     
     - name: ai-backend
       image: my-ai-api:latest
       servicePorts:
         - 5000
       vars:
-        - key: MODEL_PATH
-          value: /models
-        - key: VECTOR_DB
-          value: http://vector-db.pod:8080
+        MODEL_PATH: /models
+        VECTOR_DB: http://vector-db.pod:8080
       volumes:
         - name: model-storage
           size: 5Gi
@@ -401,10 +386,8 @@ application:
       servicePorts:
         - 3000
       vars:
-        - key: API_URL
-          value: http://api.pod:8080
-        - key: WEBSOCKET_URL
-          value: ws://api.pod:8080/ws
+        API_URL: http://api.pod:8080
+        WEBSOCKET_URL: ws://api.pod:8080/ws
     
     - name: api
       image: "game-api:latest"
@@ -412,12 +395,9 @@ application:
       servicePorts:
         - 8080
       vars:
-        - key: MONGO_URI
-          value: mongodb://mongo.pod:27017/leaderboard
-        - key: REDIS_URL
-          value: redis://redis.pod:6379
-        - key: JWT_SECRET
-          value: supersecretkey
+        MONGO_URI: mongodb://mongo.pod:27017/leaderboard
+        REDIS_URL: redis://redis.pod:6379
+        JWT_SECRET: supersecretkey
     
     - name: mongo
       image: "mongo:latest"

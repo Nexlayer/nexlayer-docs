@@ -1,4 +1,4 @@
-# 🚀 Nexlayer YAML: Developer's Quick Start Guide
+# 🚀 Nexlayer Deployment YAML: Developer's Quick Start Guide
 
 Hello developers! Welcome to the Nexlayer YAML guide that gets you from zero to deployed in minutes. Whether you're a freelancer, indie developer, creator, or startup founder, this guide will help you deploy lightning-fast on Nexlayer AI Cloud.
 

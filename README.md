@@ -36,7 +36,7 @@ Unlike legacy platforms, Nexlayer is AI-native and designed for modern apps, AI 
 - ✅ Built-in Security – Secrets management & encrypted storage.
 - ✅ AI & ML Ready – Deploy AI models with zero friction.
 - ✅ Effortless Networking – Services auto-discover, no networking configs.
-- ✅ Simple Deployments – No infra setup, no YAML nightmares.
+- ✅ Simple Deployments – No infra setup
 - ✅ Stack-Agnostic – Works with APIs, web apps, AI services, and more.
 
 🚀 Less setup, more shipping.

@@ -149,25 +149,6 @@ Omitting the tag (e.g., <% REGISTRY %>/your-username/my-app) defaults to :latest
 
 Tip: Specify tags (e.g., v1.2.0) for consistency; :latest might pull unexpected updates.
 
-### AI-Assisted Image Creation and Push
-
-```yaml
-application:
-  ai:
-    createDockerfile:
-      language: "nodejs"
-      framework: "express"
-      buildCommand: "npm run build"
-      startCommand: "npm start"
-    buildAndPush:
-      username: "your-username"
-      registry: "docker.io"  # or "ghcr.io"
-      tag: "v1.2.0"
-  pods:
-    - name: "app"
-      image: "your-username/my-app:v1.2.0"
-```
-
 ## 📊 Visual Diagrams
 
 ### Pod Interactions Flowchart

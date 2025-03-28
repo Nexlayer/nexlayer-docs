@@ -378,6 +378,27 @@ volumes:
     mountPath: "/data"  # Where to find it in your container (must start with /)
 ```
 
+### 🧠 Do I Need to Use `mountPath` Like `/var/lib/postgresql/data`?
+
+**Short answer: Not always.**
+
+Nexlayer simplifies how volumes are mounted by handling common defaults internally.
+
+If you're using a standard, publicly hosted image like `postgres`, `redis`, or `mongo`, Nexlayer **automatically mounts volumes to the correct internal paths** — so you don’t need to explicitly specify `mountPath` unless:
+
+- ✅ You’re using a **custom image** that expects data in a specific directory  
+- ✅ You have **explicit logic in your app** that reads/writes from a known file path  
+- ✅ You're mounting **secrets** to a specific location in the filesystem  
+
+```yaml
+# ✅ Optional if using a known image like postgres
+volumes:
+  - name: postgres-data
+    size: "5Gi"
+    # mountPath: "/var/lib/postgresql/data"  # Optional – Nexlayer auto-mounts for postgres
+```
+The Nexlayer platform abstracts path requirements for standard services. Keep your YAML cleaner by omitting mountPath unless your container specifically needs it.
+
 ## 🔐 Keeping Secrets Safe
 
 Store API keys, passwords, and other sensitive data securely:

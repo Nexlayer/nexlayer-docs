@@ -62,7 +62,7 @@ application:  # The name of the deployment
         - 80  # Format: Simple list of integers
 ```
 
-**💡 Tip**: If you prefer a more interactive way to create your `nexlayer.yaml`, try our **Deployment Template Builder** at [app.nexlayer.io/nexlayer-deployment-wizard]([https://app.nexlayer.io/template-builder](https://app.nexlayer.io/#/nexlayer-deployment-wizard)). It lets you visually configure your application and generates the YAML for you—no manual coding needed!
+**💡 Tip**: If you prefer a more interactive way to create your `nexlayer.yaml`, try our **[Deployment Template Builder](https://app.nexlayer.io/#/nexlayer-deployment-wizard)**. It lets you visually configure your application and generates the YAML for you—no manual coding needed!
 
 ### Step 3: Deploy it!
 

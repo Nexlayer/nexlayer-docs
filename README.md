@@ -1,6 +1,6 @@
 # 📚 Nexlayer Documentation
 
-Welcome to the official documentation for Nexlayer - the cloud platform that gives individual developers and AI agents the flexibility, control, and power to achieve true real-time, production-grade speed, performance, and massive scale.
+Welcome to the official documentation for Nexlayer - the AI cloud platform that gives individual developers and AI agents the flexibility, control, and power to achieve true real-time, production-grade speed, performance, and massive scale.
 
 ## 🚀 Quick Links
 
@@ -28,24 +28,6 @@ docs/
     └── examples.md
 ```
 
-## 🛠 Contributing
-
-We welcome contributions to improve our documentation! Here's how you can help:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-doc`)
-3. Commit your changes (`git commit -m 'docs: add amazing documentation'`)
-4. Push to the branch (`git push origin feature/amazing-doc`)
-5. Open a Pull Request
-
-### Contribution Guidelines
-
-- Follow the existing documentation structure
-- Use clear and concise language
-- Include code examples where appropriate
-- Test all code examples before submitting
-- Update the table of contents if needed
-
 ## 📝 Documentation Standards
 
 - Use Markdown for all documentation files
@@ -54,29 +36,45 @@ We welcome contributions to improve our documentation! Here's how you can help:
 - Use proper heading hierarchy (H1 -> H2 -> H3)
 - Add code examples in appropriate language blocks
 
-## 🔄 Local Development
+## 🔄 Documentation Updates
 
-To run the documentation locally:
+Our documentation is regularly updated to reflect the latest features and improvements in the Nexlayer platform. If you notice any discrepancies or have suggestions for improvement, please contact our support team.
+
+## 🤝 Support & Resources
+
+- [Official Website](https://nexlayer.io)
+- [API Reference](https://api.nexlayer.io)
+- [Status Page](https://status.nexlayer.io)
+- Email: support@nexlayer.io
+
+### Enterprise Support
+
+For enterprise customers, we offer:
+- 24/7 Priority Support
+- Custom Integration Assistance
+- Dedicated Account Management
+- Technical Architecture Consulting
+
+Contact our [sales team](mailto:sales@nexlayer.io) for enterprise inquiries.
+
+## ⚡ Quick Start
 
 ```bash
-# Install dependencies (if using a static site generator)
-npm install
+# Install Nexlayer CLI
+curl -fsSL https://get.nexlayer.io | sh
 
-# Start local server
-npm start
+# Deploy your first application
+nexlayer deploy
 ```
 
-## 📜 License
+Visit our [Quick Start Guide](docs/guides/quickstart.md) for detailed instructions.
 
-This documentation is licensed under the [Apache 2.0 License](LICENSE).
+## 📱 Stay Connected
 
-## 🤝 Community and Support
-
-- Join our [Discord Community](https://discord.gg/nexlayer)
 - Follow us on [Twitter](https://twitter.com/nexlayer)
-- Email support: support@nexlayer.io
-- Open GitHub issues for documentation bugs or suggestions
+- Subscribe to our [Blog](https://blog.nexlayer.io)
+- Join our [Discord Community](https://discord.gg/nexlayer)
 
-## ✨ Special Thanks
+---
 
-Thanks to all our contributors who help make this documentation better every day!
+© 2024 Nexlayer, Inc. All rights reserved.

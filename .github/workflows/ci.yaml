@@ -4,6 +4,8 @@ on:
     branches:
       - master
       - main
+  repository_dispatch:
+    types: [child-docs-updated]
 permissions:
   contents: write
 jobs:

@@ -42,10 +42,11 @@ Our documentation is regularly updated to reflect the latest features and improv
 
 ## 🤝 Support & Resources
 
-- [Official Website](https://nexlayer.io)
+- [Official Website](https://nexlayer.com)
+- [Platform Dashboard](https://app.nexlayer.io)
 - [API Reference](https://api.nexlayer.io)
 - [Status Page](https://status.nexlayer.io)
-- Email: support@nexlayer.io
+- Email: support@nexlayer.com
 
 ### Enterprise Support
 
@@ -55,7 +56,7 @@ For enterprise customers, we offer:
 - Dedicated Account Management
 - Technical Architecture Consulting
 
-Contact our [sales team](mailto:sales@nexlayer.io) for enterprise inquiries.
+Contact our [sales team](mailto:contact@nexlayer.com) for enterprise inquiries.
 
 ## ⚡ Quick Start
 
@@ -72,9 +73,9 @@ Visit our [Quick Start Guide](docs/guides/quickstart.md) for detailed instructio
 ## 📱 Stay Connected
 
 - Follow us on [Twitter](https://twitter.com/nexlayer)
-- Subscribe to our [Blog](https://blog.nexlayer.io)
-- Join our [Discord Community](https://discord.gg/nexlayer)
+- Subscribe to our [Blog](https://nexlayer.com/blog)
+- Join our [Community Discussions](https://github.com/orgs/Nexlayer/discussions)
 
 ---
 
-© 2024 Nexlayer, Inc. All rights reserved.
+© 2025 Nexlayer, Inc. All rights reserved.

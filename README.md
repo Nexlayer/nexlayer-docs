@@ -1,6 +1,16 @@
 # 📚 Nexlayer Documentation
 
-Welcome to the official documentation for Nexlayer - the AI cloud platform that gives individual developers and AI agents the flexibility, control, and power to achieve true real-time, production-grade speed, performance, and massive scale.
+> The Autonomous Cloud Architect: Introducing Nexlayer.com
+
+Welcome to Nexlayer - the AI-powered cloud platform that autonomously deploys, scales, and operates modern applications instantly, without infrastructure overhead.
+
+## 🎯 Our Vision
+
+AuditDeploy Inc. is an applied research lab automating technology deployment. Our mission is to build the cloud architect of the future—an AI agent system that's an order of magnitude more effective than any cloud engineer or DevOps team.
+
+We call it the AI deployer—an intelligent agent that turns any codebase into a live, scalable product in seconds. With AI as your deployment partner, you'll move at the speed of intuition—even across the most complex systems.
+
+This new generation of engineers won't just write code—they'll launch entire products with it. They'll architect, ship, and scale infrastructure without ever touching a terminal.
 
 ## 🚀 Quick Links
 
@@ -72,10 +82,16 @@ Visit our [Quick Start Guide](docs/guides/quickstart.md) for detailed instructio
 
 ## 📱 Stay Connected
 
-- Follow us on [Twitter](https://twitter.com/nexlayer)
+- Follow us on [Twitter](https://x.com/nexlayerapp)
 - Subscribe to our [Blog](https://nexlayer.com/blog)
 - Join our [Community Discussions](https://github.com/orgs/Nexlayer/discussions)
+
+## 🛡️ License
+
+This documentation is protected by copyright law and provided under the [Nexlayer Documentation License](LICENSE). All rights reserved.
 
 ---
 
 © 2025 Nexlayer, Inc. All rights reserved.
+
+We're not just making infrastructure easier—we're redefining what it means to ship.

@@ -56,7 +56,7 @@ Our documentation is regularly updated to reflect the latest features and improv
 - [Platform Dashboard](https://app.nexlayer.io)
 - [API Reference](https://api.nexlayer.io)
 - [Status Page](https://status.nexlayer.io)
-- Email: support@nexlayer.com
+- Email: support@auditdeploy.com
 
 ### Enterprise Support
 
@@ -66,7 +66,7 @@ For enterprise customers, we offer:
 - Dedicated Account Management
 - Technical Architecture Consulting
 
-Contact our [sales team](mailto:contact@nexlayer.com) for enterprise inquiries.
+Contact our [sales team](mailto:contact@auditdeploy.com) for enterprise inquiries.
 
 ## ⚡ Quick Start
 
@@ -92,6 +92,6 @@ This documentation is protected by copyright law and provided under the [Nexlaye
 
 ---
 
-© 2025 Nexlayer, Inc. All rights reserved.
+© 2025 AuditDeploy Inc. All rights reserved.
 
 We're not just making infrastructure easier—we're redefining what it means to ship.

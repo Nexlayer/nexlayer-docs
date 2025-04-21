@@ -102,6 +102,11 @@ jobs:
           curl -X POST https://app.nexlayer.io/startUserDeployment \
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml
+<<<<<<< HEAD
+=======
+        env:
+          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
+>>>>>>> 686ece7 (mkdoc setup)
 ```
 
 ### Advanced Workflow with Caching
@@ -153,6 +158,11 @@ jobs:
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml | jq -r '.url')
           echo "Deployed to: $DEPLOY_URL"
+<<<<<<< HEAD
+=======
+        env:
+          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
+>>>>>>> 686ece7 (mkdoc setup)
           
       - name: Notify Deployment
         if: success()
@@ -163,6 +173,7 @@ jobs:
           SLACK_COLOR: good
 ```
 
+<<<<<<< HEAD
 ## Deployment Flow
 
 The Nexlayer deployment process follows these steps:
@@ -218,6 +229,8 @@ application:
           mountPath: "/var/lib/postgresql/data"
 ```
 
+=======
+>>>>>>> 686ece7 (mkdoc setup)
 ## Environment Variables
 
 ### Required Variables
@@ -352,6 +365,7 @@ For additional help:
 - Check the [FAQ](../get-started/faq.md)
 - Review [Examples](examples.md)
 - Open GitHub issues
+<<<<<<< HEAD
 - Join community discussions
 
 ## Next Steps
@@ -361,3 +375,6 @@ For additional help:
 3. Test your deployment process
 4. Monitor your deployments
 5. Implement proper logging and monitoring 
+=======
+- Join community discussions 
+>>>>>>> 686ece7 (mkdoc setup)

@@ -34,6 +34,7 @@ theme:
     - search.share
     - search.suggest
     - toc.follow
+    - navigation.expand
   icon:
     repo: fontawesome/brands/github
 
@@ -43,19 +44,21 @@ plugins:
   
 nav:
   - Docs:
-    - Welcome: welcome.md
-    - Introduction: 'index.md'
+    - Documentation: 'docs-index.md'
+    - Introduction: 'introduction.md'
     - Quickstart: 'quickstart.md'
-    - FAQ: 'get-started/faq.md'
-    # - Introduction: get-started/introduction.md
-    # - guides/agent-integration.md
-    # - guides/ci.md
-    # - guides/cli.md
-    # - guides/examples.md
-    # - guides/post-deploy.md
-    # - guides/quickstart.md
-    # - guides/web-ui.md
-
+    - Get Started:
+      - Introduction: 'get-started/introduction.md'
+      - FAQ: 'get-started/faq.md'
+    - Guides:
+      - Quickstart: 'guides/quickstart.md'
+      - Agent Integration: 'guides/agent-integration.md'
+      - CI: 'guides/ci.md'
+      - Examples: 'guides/examples.md'
+      - Post Deploy: 'guides/post-deploy.md'
+      - Web UI: 'guides/web-ui.md'
+  - CLI: 'guides/cli.md'
+  
 
 
 markdown_extensions:

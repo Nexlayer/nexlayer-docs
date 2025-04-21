@@ -131,3 +131,21 @@
   .md-footer-meta__inner {
     display: none;
   }
+  /* Add spacing between navigation section groups in sidebar */
+/* toc */
+  /* .md-nav__title {
+  margin-bottom: 1em;
+  border: 2px solid red
+} */
+
+.md-nav__list{
+  margin-bottom: 1.5em;
+  margin-top: 0.4em;
+  /* border: 1px solid rgb(81, 0, 255); */
+}
+/* Add spacing between top-level section groups in sidebar */
+.md-nav__item.md-nav__item--section {
+  margin-top: 2.5em;
+  /* border:1px solid brown */
+}
+

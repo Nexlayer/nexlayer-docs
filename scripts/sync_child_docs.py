@@ -2,32 +2,44 @@ import os
 import shutil
 import yaml
 
-CHILD_REPO_PATH = "child-repo"
-DOCS_CHILD_PATH = "docs/child-repo"
+CHILD_REPOS = {
+    "nexlayer-deployment-yaml": {
+        "source": "nexlayer-deployment-yaml",
+        "destination": "docs/deployment",
+        "nav_section": ["Docs", "Deployment"]
+    },
+    "api-reference": {
+        "source": "api-reference",
+        "destination": "docs/api-reference",
+        "nav_section": ["API & SDK"]
+    }
+}
+
 MKDOCS_YML = "mkdocs.yml"
 
-def ensure_docs_child_path():
-    os.makedirs(DOCS_CHILD_PATH, exist_ok=True)
+def ensure_dirs():
+    for repo in CHILD_REPOS.values():
+        os.makedirs(repo["destination"], exist_ok=True)
 
-def copy_markdown_files():
-    # Clean the child docs folder first to remove outdated files
-    if os.path.exists(DOCS_CHILD_PATH):
-        shutil.rmtree(DOCS_CHILD_PATH)
-    os.makedirs(DOCS_CHILD_PATH, exist_ok=True)
+def clean_and_copy():
+    for repo in CHILD_REPOS.values():
+        # Clean destination
+        if os.path.exists(repo["destination"]):
+            shutil.rmtree(repo["destination"])
+        os.makedirs(repo["destination"], exist_ok=True)
 
-    for root, dirs, files in os.walk(CHILD_REPO_PATH):
-        for file in files:
-            if file.endswith(".md"):
-                rel_path = os.path.relpath(os.path.join(root, file), CHILD_REPO_PATH)
-                dest_path = os.path.join(DOCS_CHILD_PATH, rel_path)
+        # Copy .md files
+        for root, _, files in os.walk(repo["source"]):
+            for file in files:
+                if file.endswith(".md"):
+                    rel_path = os.path.relpath(os.path.join(root, file), repo["source"])
+                    dest_path = os.path.join(repo["destination"], rel_path)
+                    os.makedirs(os.path.dirname(dest_path), exist_ok=True)
 
-                os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+                    if os.path.basename(file).lower() == "readme.md":
+                        dest_path = os.path.join(os.path.dirname(dest_path), "readme.md")
 
-                # Normalize README as lowercase
-                if os.path.basename(file).lower() == "readme.md":
-                    dest_path = os.path.join(os.path.dirname(dest_path), "readme.md")
-
-                shutil.copy2(os.path.join(root, file), dest_path)
+                    shutil.copy2(os.path.join(root, file), dest_path)
 
 def build_nav_for_file(path):
     name = os.path.splitext(os.path.basename(path))[0].replace("-", " ").capitalize()
@@ -38,27 +50,47 @@ def load_existing_nav(yml_path):
         return yaml.safe_load(f)
 
 def update_mkdocs_nav(existing):
-    # Clear out any existing 'Child Docs' sections
-    cleaned_nav = []
-    for item in existing.get("nav", []):
+    original_nav = existing.get("nav", [])
+    new_nav = []
+
+    # Filter out existing API & SDK and Deployment sections
+    for item in original_nav:
         if isinstance(item, dict):
             key = list(item.keys())[0]
-            if key != "Child Docs":
-                cleaned_nav.append(item)
+            if key in ["API & SDK"]:
+                continue
+            if key == "Docs":
+                docs_section = item["Docs"]
+                filtered_docs = []
+                for subitem in docs_section:
+                    if isinstance(subitem, dict) and "Deployment" in subitem:
+                        continue
+                    filtered_docs.append(subitem)
+                new_nav.append({"Docs": filtered_docs})
+            else:
+                new_nav.append(item)
         else:
-            cleaned_nav.append(item)
+            new_nav.append(item)
 
-    # Collect child files into new nav entries
-    child_nav = []
-    for root, _, files in os.walk(DOCS_CHILD_PATH):
-        for file in sorted(files):
-            if file.endswith(".md"):
-                rel_path = os.path.relpath(os.path.join(root, file), "docs")
-                child_nav.append(build_nav_for_file(rel_path))
+    # Inject Deployment under Docs
+    for repo_key, repo in CHILD_REPOS.items():
+        child_nav = []
+        for root, _, files in os.walk(repo["destination"]):
+            for file in sorted(files):
+                if file.endswith(".md"):
+                    rel_path = os.path.relpath(os.path.join(root, file), "docs")
+                    child_nav.append(build_nav_for_file(rel_path))
 
-    # Append cleaned original nav with fresh Child Docs
-    cleaned_nav.append({"Child Docs": child_nav})
-    existing["nav"] = cleaned_nav
+        # Insert under correct nav structure
+        if repo["nav_section"] == ["Docs", "Deployment"]:
+            for nav in new_nav:
+                if "Docs" in nav:
+                    nav["Docs"].append({"Deployment": child_nav})
+                    break
+        else:
+            new_nav.append({repo["nav_section"][0]: child_nav})
+
+    existing["nav"] = new_nav
     return existing
 
 def write_updated_mkdocs(config):
@@ -66,14 +98,14 @@ def write_updated_mkdocs(config):
         yaml.dump(config, f, sort_keys=False)
 
 def main():
-    ensure_docs_child_path()
-    copy_markdown_files()
+    ensure_dirs()
+    clean_and_copy()
 
     mkdocs_config = load_existing_nav(MKDOCS_YML)
     updated_config = update_mkdocs_nav(mkdocs_config)
     write_updated_mkdocs(updated_config)
 
-    print("✅ Synced child repo markdown files into docs/child-repo and updated mkdocs.yml.")
+    print("✅ Synced all child repos and updated mkdocs.yml.")
 
 if __name__ == "__main__":
     main()

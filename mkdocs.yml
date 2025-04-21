@@ -58,8 +58,6 @@ nav:
       - Post Deploy: 'guides/post-deploy.md'
       - Web UI: 'guides/web-ui.md'
   - CLI: 'guides/cli.md'
-  
-
 
 markdown_extensions:
   - pymdownx.details

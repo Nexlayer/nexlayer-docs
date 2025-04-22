@@ -47,7 +47,7 @@ def build_nav_for_file(path):
 
 def load_existing_nav(yml_path):
     with open(yml_path, "r") as f:
-        return yaml.safe_load(f)
+        return yaml.load(f, Loader=yaml.FullLoader)
 
 def update_mkdocs_nav(existing):
     original_nav = existing.get("nav", [])

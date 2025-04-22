@@ -71,42 +71,37 @@ name: Nexlayer CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
-          
+
       - name: Install Nexlayer CLI
         run: |
           curl -fsSL https://get.nexlayer.io | sh
-          
+
       - name: Run Tests
         run: go test ./...
-        
+
       - name: Build
         run: go build -o app
-        
+
       - name: Deploy to Nexlayer
         if: github.ref == 'refs/heads/main'
         run: |
           curl -X POST https://app.nexlayer.io/startUserDeployment \
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml
-<<<<<<< HEAD
-=======
-        env:
-          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
->>>>>>> 686ece7 (mkdoc setup)
 ```
 
 ### Advanced Workflow with Caching
@@ -116,33 +111,33 @@ name: Nexlayer CI/CD
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
           go-version: 1.16
           cache: true
           cache-dependency-path: go.sum
-          
+
       - name: Install Nexlayer CLI
         run: |
           curl -fsSL https://get.nexlayer.io | sh
-          
+
       - name: Run Tests
         run: go test ./...
-        
+
       - name: Build
         run: go build -o app
-        
+
       - name: Cache Build Artifacts
         uses: actions/cache@v2
         with:
@@ -150,7 +145,7 @@ jobs:
           key: ${{ runner.os }}-build-${{ hashFiles('**/go.sum') }}
           restore-keys: |
             ${{ runner.os }}-build-
-            
+
       - name: Deploy to Nexlayer
         if: github.ref == 'refs/heads/main'
         run: |
@@ -158,31 +153,27 @@ jobs:
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml | jq -r '.url')
           echo "Deployed to: $DEPLOY_URL"
-<<<<<<< HEAD
-=======
-        env:
-          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
->>>>>>> 686ece7 (mkdoc setup)
-          
+
       - name: Notify Deployment
         if: success()
         uses: rtCamp/action-slack-notify@v2
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-          SLACK_MESSAGE: 'Deployment successful!'
+          SLACK_MESSAGE: "Deployment successful!"
           SLACK_COLOR: good
 ```
 
-<<<<<<< HEAD
 ## Deployment Flow
 
 The Nexlayer deployment process follows these steps:
 
 1. **Schema Validation** (`GET /schema`)
+
    - Validates your YAML against the Nexlayer schema
    - Ensures all required fields are present and correctly formatted
 
 2. **Configuration Validation** (`POST /validate`)
+
    - Validates your application configuration
    - Checks for potential issues or conflicts
 
@@ -197,7 +188,7 @@ Here's an example `nexlayer.yaml` file for a typical web application:
 ```yaml
 application:
   name: "my-web-app"
-  url: "www.example.ai"  # Optional: Include for permanent deployments
+  url: "www.example.ai" # Optional: Include for permanent deployments
   pods:
     - name: frontend
       image: "your-username/frontend:v1.0.0"
@@ -206,7 +197,7 @@ application:
         - 3000
       vars:
         API_URL: "http://backend.pod:4000"
-        
+
     - name: backend
       image: "your-username/backend:v1.0.0"
       path: "/api"
@@ -214,7 +205,7 @@ application:
         - 4000
       vars:
         DATABASE_URL: "postgresql://postgres:password@database.pod:5432/mydb"
-        
+
     - name: database
       image: "postgres:14"
       servicePorts:
@@ -229,8 +220,6 @@ application:
           mountPath: "/var/lib/postgresql/data"
 ```
 
-=======
->>>>>>> 686ece7 (mkdoc setup)
 ## Environment Variables
 
 ### Required Variables
@@ -321,16 +310,19 @@ access:
 ## Best Practices
 
 1. **Version Control**
+
    - Keep CI configuration in version control
    - Use branches for feature development
    - Protect main branch
 
 2. **Testing**
+
    - Run tests before deployment
    - Use code coverage
    - Implement integration tests
 
 3. **Security**
+
    - Use secrets for sensitive data
    - Implement role-based access
    - Regular security audits
@@ -345,11 +337,13 @@ access:
 ### Common Issues
 
 1. **Build Failures**
+
    - Check dependencies
    - Verify environment
    - Review logs
 
 2. **Deployment Issues**
+
    - Check API key
    - Verify permissions
    - Review configuration
@@ -362,10 +356,10 @@ access:
 ## Support
 
 For additional help:
+
 - Check the [FAQ](../get-started/faq.md)
 - Review [Examples](examples.md)
 - Open GitHub issues
-<<<<<<< HEAD
 - Join community discussions
 
 ## Next Steps
@@ -374,7 +368,4 @@ For additional help:
 2. Configure your deployment YAML
 3. Test your deployment process
 4. Monitor your deployments
-5. Implement proper logging and monitoring 
-=======
-- Join community discussions 
->>>>>>> 686ece7 (mkdoc setup)
+5. Implement proper logging and monitoring

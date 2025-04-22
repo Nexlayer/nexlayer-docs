@@ -17,7 +17,7 @@ This new generation of engineers won't just write code—they'll launch entire p
 - [FAQ](docs/get-started/faq.md)
 - [CLI Reference](docs/guides/cli.md)
 - [Agent Integration](docs/guides/agent-integration.md)
-- [CI/CD Integration](docs/guides/ci.md)
+- [CI Integration](docs/guides/ci.md)
 
 ## 📖 Documentation Structure
 

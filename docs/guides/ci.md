@@ -4,7 +4,7 @@ This guide explains how to set up and configure continuous integration (CI) for 
 
 ## Overview
 
-Nexlayer CI provides automated testing, building, and deployment capabilities for your applications.
+Nexlayer CI provides automated testing, building, and deployment capabilities for your applications. This guide will show you how to integrate Nexlayer deployments into your CI/CD pipeline.
 
 ## Setting Up CI
 
@@ -102,8 +102,6 @@ jobs:
           curl -X POST https://app.nexlayer.io/startUserDeployment \
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml
-        env:
-          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
 ```
 
 ### Advanced Workflow with Caching
@@ -155,8 +153,6 @@ jobs:
             -H "Content-Type: text/x-yaml" \
             --data-binary @nexlayer.yaml | jq -r '.url')
           echo "Deployed to: $DEPLOY_URL"
-        env:
-          NEXLAYER_API_KEY: ${{ secrets.NEXLAYER_API_KEY }}
           
       - name: Notify Deployment
         if: success()
@@ -165,6 +161,61 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
           SLACK_MESSAGE: 'Deployment successful!'
           SLACK_COLOR: good
+```
+
+## Deployment Flow
+
+The Nexlayer deployment process follows these steps:
+
+1. **Schema Validation** (`GET /schema`)
+   - Validates your YAML against the Nexlayer schema
+   - Ensures all required fields are present and correctly formatted
+
+2. **Configuration Validation** (`POST /validate`)
+   - Validates your application configuration
+   - Checks for potential issues or conflicts
+
+3. **Deployment** (`POST /startUserDeployment`)
+   - Deploys your application to Nexlayer
+   - Returns a deployment URL
+
+## Example Deployment YAML
+
+Here's an example `nexlayer.yaml` file for a typical web application:
+
+```yaml
+application:
+  name: "my-web-app"
+  url: "www.example.ai"  # Optional: Include for permanent deployments
+  pods:
+    - name: frontend
+      image: "your-username/frontend:v1.0.0"
+      path: "/"
+      servicePorts:
+        - 3000
+      vars:
+        API_URL: "http://backend.pod:4000"
+        
+    - name: backend
+      image: "your-username/backend:v1.0.0"
+      path: "/api"
+      servicePorts:
+        - 4000
+      vars:
+        DATABASE_URL: "postgresql://postgres:password@database.pod:5432/mydb"
+        
+    - name: database
+      image: "postgres:14"
+      servicePorts:
+        - 5432
+      vars:
+        POSTGRES_USER: "postgres"
+        POSTGRES_PASSWORD: "password"
+        POSTGRES_DB: "mydb"
+      volumes:
+        - name: db-data
+          size: "1Gi"
+          mountPath: "/var/lib/postgresql/data"
 ```
 
 ## Environment Variables
@@ -301,4 +352,12 @@ For additional help:
 - Check the [FAQ](../get-started/faq.md)
 - Review [Examples](examples.md)
 - Open GitHub issues
-- Join community discussions 
+- Join community discussions
+
+## Next Steps
+
+1. Set up your CI/CD pipeline
+2. Configure your deployment YAML
+3. Test your deployment process
+4. Monitor your deployments
+5. Implement proper logging and monitoring 

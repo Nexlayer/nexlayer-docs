@@ -1,7 +1,5 @@
 # 📚 Nexlayer Documentation
 
-> The Autonomous Cloud Architect: Introducing Nexlayer.com
-
 Welcome to Nexlayer - the AI-powered cloud platform that autonomously deploys, scales, and operates modern applications instantly, without infrastructure overhead.
 
 ## 🎯 Our Vision

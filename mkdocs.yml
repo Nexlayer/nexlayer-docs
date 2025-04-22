@@ -44,9 +44,7 @@ plugins:
   
 nav:
   - Docs:
-    - Documentation: 'docs-index.md'
-    - Introduction: 'introduction.md'
-    - Quickstart: 'quickstart.md'
+    - Documentation: 'index.md'
     - Get Started:
       - Introduction: 'get-started/introduction.md'
       - FAQ: 'get-started/faq.md'

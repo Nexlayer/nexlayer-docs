@@ -1,0 +1,69 @@
+name: Rebuild and Deploy
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [child-updated]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout parent repo with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install pyyaml mkdocs mkdocs-material mkdocs-monorepo-plugin
+
+      - name: Ensure submodules track correct remote branches
+        run: |
+          git config -f .gitmodules submodule.api-reference.branch mkdocs-api-reference
+          git config -f .gitmodules submodule.nexlayer-deployment-yaml.branch mkdocs-deployment-yaml
+          git submodule sync --recursive
+          git submodule update --init --recursive
+
+      - name: Update each submodule to latest commit on their branch
+        run: |
+          cd api-reference
+          git checkout mkdocs-api-reference
+          git pull origin mkdocs-api-reference
+          cd ..
+
+          cd nexlayer-deployment-yaml
+          git checkout mkdocs-deployment-yaml
+          git pull origin mkdocs-deployment-yaml
+          cd ..
+
+          git add api-reference nexlayer-deployment-yaml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "🔄 Update submodules to latest commits" || echo "No changes to commit"
+          git push origin HEAD:${GITHUB_REF##*/} || echo "No changes to push"
+
+      - name: Sync child docs and update mkdocs.yml
+        run: python scripts/sync_child_docs.py
+
+      - name: Commit synced docs and mkdocs.yml
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs mkdocs.yml
+          git commit -m "🔄 Sync docs from submodules" || echo "No changes to commit"
+          git push origin HEAD:${{ github.ref }} || echo "No changes to push"
+
+      - name: Deploy to GitHub Pages with MkDocs
+        run: mkdocs gh-deploy --force

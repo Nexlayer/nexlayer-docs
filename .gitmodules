@@ -1,0 +1,8 @@
+[submodule "nexlayer-deployment-yaml"]
+	path = nexlayer-deployment-yaml
+	url = https://github.com/Nexlayer/nexlayer-deployment-yaml.git
+	branch = mkdocs-deployment-yaml
+[submodule "api-reference"]
+	path = api-reference
+	url = https://github.com/Nexlayer/api-reference.git
+	branch = mkdocs-api-reference

@@ -31,14 +31,14 @@ jobs:
 
       - name: Ensure submodules track correct remote branches
         run: |
-          git config -f .gitmodules submodule.nexlayer-api-reference.branch mkdocs-api-reference
+          git config -f .gitmodules submodule.api-reference.branch mkdocs-api-reference
           git config -f .gitmodules submodule.nexlayer-deployment-yaml.branch mkdocs-deployment-yaml
           git submodule sync --recursive
           git submodule update --init --recursive
 
       - name: Update each submodule to latest commit on their branch
         run: |
-          cd nexlayer-api-reference
+          cd api-reference
           git checkout mkdocs-api-reference
           git pull origin mkdocs-api-reference
           cd ..
@@ -48,7 +48,7 @@ jobs:
           git pull origin mkdocs-deployment-yaml
           cd ..
 
-          git add nexlayer-api-reference nexlayer-deployment-yaml
+          git add api-reference nexlayer-deployment-yaml
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "🔄 Update submodules to latest commits" || echo "No changes to commit"

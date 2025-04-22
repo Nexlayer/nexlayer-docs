@@ -45,9 +45,14 @@ def build_nav_for_file(path):
     name = os.path.splitext(os.path.basename(path))[0].replace("-", " ").capitalize()
     return {name: path.replace("\\", "/")}
 
+# def load_existing_nav(yml_path):
+#     with open(yml_path, "r") as f:
+#         return yaml.load(f, Loader=yaml.FullLoader)
 def load_existing_nav(yml_path):
     with open(yml_path, "r") as f:
-        return yaml.load(f, Loader=yaml.FullLoader)
+        lines = f.readlines()
+    safe_lines = [line for line in lines if "!!python/name:" not in line]
+    return yaml.safe_load("".join(safe_lines))
 
 def update_mkdocs_nav(existing):
     original_nav = existing.get("nav", [])

@@ -13,7 +13,7 @@ title: FAQ
 ---
 
 **2. What makes Nexlayer unique compared to other cloud platforms?**  
-Nexlayer is the **only** cloud platform that gives **individual developers** and **autonomous agents** the **flexibility**, **control**, and **power** to achieve true **real‑time, production‑grade speed**, **performance**, and **massive scale**—all through a single declarative YAML, CLI, Web UI, or AI‑agent workflow.  
+Nexlayer is the **only** cloud platform that gives **individual developers** and **AI agents** the **flexibility**, **control**, and **power** to achieve true **real‑time, production‑grade speed**, **performance**, and **massive scale**—all through a single declarative YAML, CLI, Web UI, or AI‑agent workflow.  
 > **No other cloud platform** puts you in control of enterprise‑scale infrastructure—giving you the power, flexibility, and speed of a global container platform, without any of the complexity.
 
 ---

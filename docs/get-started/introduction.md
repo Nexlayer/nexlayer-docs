@@ -1,42 +1,28 @@
-# Introduction to Nexlayer
+<!-- get-started/introduction.md -->
+---
+title: Introduction
+---
 
-Nexlayer is a powerful CLI tool built with Go and the Cobra framework, designed to streamline your development workflow and enhance productivity.
+# 🦾 What Is Nexlayer?
 
-## What is Nexlayer?
+Nexlayer is an **AI‑powered cloud** that abstracts away all infrastructure complexity. You decide what to launch, and Nexlayer automatically:
 
-Nexlayer is an MIT-licensed open-source project that provides a comprehensive set of tools for managing and automating your development processes. It combines the power of a modern CLI with intuitive web interfaces and agent-based automation.
+1. **Provisions** compute resources, networking, storage, DNS, and persistent volumes  
+2. **Deploys** your app via YAML, our CLI, Web UI, or AI agents  
+3. **Auto‑discovers** and wires up all services without manual configuration  
+4. **Auto‑scales** with traffic—no manual intervention  
+5. **Manages** secrets, resource allocation, and TLS certificates  
+6. **Provides** instant previews (2 hr) or permanent custom domains  
 
-## Key Features
+---
 
-- **Modern CLI Interface**: Built with Go and Cobra for optimal performance and user experience
-- **Web UI Integration**: Seamless integration between CLI and web interface
-- **Agent-Based Automation**: Powerful automation capabilities through intelligent agents
-- **CI/CD Integration**: Built-in support for continuous integration and deployment
-- **Extensible Architecture**: Easy to extend and customize for your specific needs
+## ⚡️ Quick Start
 
-## Core Concepts
-
-### CLI Commands
-Nexlayer's CLI is organized into logical command groups, each handling specific functionality. The commands are designed to be intuitive and follow standard CLI patterns.
-
-### Web Interface
-The web UI provides a visual representation of your workflows and configurations, making it easy to manage and monitor your processes.
-
-### Agents
-Nexlayer agents are intelligent components that can automate tasks and workflows. They can be configured and customized to suit your specific needs.
-
-## Getting Started
-
-To get started with Nexlayer, check out our [Quickstart Guide](../guides/quickstart.md) or explore the [CLI Reference](../guides/cli.md) for detailed command documentation.
-
-## System Requirements
-
-- Go 1.16 or later
-- Operating System: Linux, macOS, or Windows
-- Internet connection for web interface access
-
-## Next Steps
-
-1. Install Nexlayer using our [installation guide](../guides/quickstart.md#installation)
-2. Configure your first agent using the [Agent Integration Guide](../guides/agent-integration.md)
-3. Explore the [CLI commands](../guides/cli.md) to understand available functionality 
+1. **Write** a `nexlayer.yaml`:
+   ```yaml
+   application:
+     name: "my-app"
+     pods:
+       - name: web
+         image: your-username/my-app:v1.0.0
+         servicePorts: [3000]

@@ -1,25 +1,62 @@
-# Nexlayer Documentation
+# 🚀 Welcome to Nexlayer
 
-Welcome to the Nexlayer documentation! This guide will help you understand and use Nexlayer effectively.
+Nexlayer is the AI-native cloud for builders, creators, startups, and agents.
 
-## Documentation Sections
+It's the fastest way to launch full-stack apps — from code or prompt to a live, scalable cloud deployment — without complex configs or platform overhead.
 
-### Getting Started
-- [Introduction](get-started/introduction.md) - Learn about Nexlayer and its core concepts
-- [FAQ](get-started/faq.md) - Frequently asked questions about Nexlayer
+## What is Nexlayer?
+Nexlayer is a new kind of cloud platform that lets you:
 
-### Guides
-- [Quickstart](guides/quickstart.md) - Get up and running quickly with Nexlayer
-- [CLI Reference](guides/cli.md) - Detailed documentation of the Nexlayer CLI
-- [Web UI Guide](guides/web-ui.md) - Learn how to use the Nexlayer Web Interface
-- [Agent Integration](guides/agent-integration.md) - How to integrate Nexlayer agents
-- [CI Integration](guides/ci.md) - Setting up continuous integration with Nexlayer
-- [Post-Deployment](guides/post-deploy.md) - Managing your Nexlayer deployment
-- [Examples](guides/examples.md) - Real-world examples and use cases
+- Deploy full-stack apps with zero infrastructure setup
+- Skip manual pipelines, DevOps, and boilerplate
+- Auto-scale with always-live deployments
+- Launch from CLI, Web UI, or AI-native tools
 
-## Contributing
+## Who is it for?
+🛠️ Builders shipping real products
 
-We welcome contributions to our documentation! Please see our [Contributing Guidelines](CONTRIBUTING.md) for more information.
+🎨 Creators using AI or no-code workflows
+
+🚀 Startups that want real infra without a platform team
+
+🤖 Agents that build and deploy autonomously
+
+## Why Nexlayer?
+⚡ Launch in 60 seconds 
+
+🧠 AI-native — designed for codegen and agent workflows
+
+🧰 Full-stack support — containers, APIs, UIs, databases
+
+🌍 No lock-in — portable configs, real infrastructure, your stack
+
+## How it works
+
+**Define your app in a simple `nexlayer.yaml`**  
+Just describe what you want to ship — services, containers, ports, env vars — and Nexlayer handles the rest.  
+Need help? Ask ChatGPT right in your editor.
+
+**Deploy from anywhere**  
+Use the CLI, curl, or type "Deploy my app to nexlayer.com" in your AI code editors like Cursor,  Windsurf, Copilot, or your AI-powered terminals like Claude Code, Warp, Memex etc... 
+
+**Nexlayer handles the cloud — instantly**  
+You get a live URL and production-ready cloud infrastructure with:
+
+What happens automatically when you deploy to Nexlayer: 
+✅ Service discovery via <pod-name>.pod  
+✅ URL path routing  
+✅ Zero-config networking  
+✅ Secure environment variable injection  
+✅ Volume provisioning and mounting  
+✅ Encrypted secrets (auto-mounted)  
+✅ Auto TLS for public URLs  
+✅ Automatic scaling and restarts  
+✅ Internal DNS between pods  
+✅ Image pulling and pod booting
+
+## Ready to launch?
+👉 Jump into the [Quickstart Guide](guides/quickstart.md)  
+👉 Or explore CLI, Web UI, and Agent Deployments
 
 ## Support
 

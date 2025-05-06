@@ -60,8 +60,6 @@ nav:
   - Readme: api-reference/readme.md
   - Authentication: api-reference/docs/guides/authentication.md
   - Quickstart: api-reference/docs/guides/quickstart.md
-  - Nodejs: api-reference/docs/sdk/nodejs.md
-  - Python: api-reference/docs/sdk/python.md
   - Readme: api-reference/docs/api/readme.md
 markdown_extensions:
 - pymdownx.details

@@ -1,28 +1,61 @@
-<!-- get-started/introduction.md -->
----
-title: Introduction
----
+# 🚀 Welcome to Nexlayer
 
-# 🦾 What Is Nexlayer?
+**The fastest way to launch real apps — built by you or your AI.**
 
-Nexlayer is an **AI‑powered cloud** that abstracts away all infrastructure complexity. You decide what to launch, and Nexlayer automatically:
+Nexlayer is the AI-native cloud for builders, creators, startups, and agents.  
+Whether you’re coding in Cursor, generating with ChatGPT, or running your own AI workflow — Nexlayer takes your idea and brings it to life with a live, scalable URL.
 
-1. **Provisions** compute resources, networking, storage, DNS, and persistent volumes  
-2. **Deploys** your app via YAML, our CLI, Web UI, or AI agents  
-3. **Auto‑discovers** and wires up all services without manual configuration  
-4. **Auto‑scales** with traffic—no manual intervention  
-5. **Manages** secrets, resource allocation, and TLS certificates  
-6. **Provides** instant previews (2 hr) or permanent custom domains  
+No DevOps. No setup. No code required to start.
 
 ---
 
-## ⚡️ Quick Start
+## 💡 Why Nexlayer?
 
-1. **Write** a `nexlayer.yaml`:
-   ```yaml
-   application:
-     name: "my-app"
-     pods:
-       - name: web
-         image: your-username/my-app:v1.0.0
-         servicePorts: [3000]
+Because the hard parts of cloud infrastructure shouldn't slow you down.
+
+Nexlayer automates everything behind the scenes:
+
+- 🛠️ **Builds** your containers from code or prompts  
+- 🔐 **Secures** your app with TLS, secrets, and env vars  
+- 🌐 **Connects** all your services with zero config  
+- 🚀 **Scales** instantly as traffic grows  
+- 🔎 **Discovers** services like magic (`<pod-name>.pod`)  
+- ⚡ **Deploys** from CLI, Web UI, API, or AI agents
+
+You bring the idea — Nexlayer handles the cloud.
+
+---
+
+## 🧪 What can I deploy?
+
+Anything from:
+
+- A simple “Hello World” web page  
+- A fullstack app with frontend, backend, and database  
+- An AI-powered app with vector DBs and OpenAI APIs  
+- A product MVP built entirely in an AI code editor  
+- Your AI agent's next-generation toolchain
+
+Nexlayer is production-grade, AI-friendly, and designed for helping you go from mvp to scalable product in minutes. Saving you time, complexity and money.
+
+---
+
+## 🧰 You don’t need to understand YAML — but it’s there when you’re ready
+
+Most users never even touch `nexlayer.yaml`.  
+But if you want to take control — define your app structure, scale out pods, and wire up multi-service backends — it’s just a single file.
+
+One config. Full stack. Live URL.
+
+---
+
+## ✨ What’s Next?
+
+- [Quickstart: Deploy with No Code](../quickstart)  
+- [Explore Examples](../common-app-patterns)  
+- [Understand the YAML (Optional)](../yaml-building-blocks)  
+
+---
+
+**Nexlayer is where code meets cloud — with no friction.**  
+Let’s launch something incredible.

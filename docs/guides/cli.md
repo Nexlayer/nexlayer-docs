@@ -1,176 +1,58 @@
-# CLI Reference
+---
+# ⚡ Nexlayer CLI
 
-This document provides detailed information about Nexlayer's command-line interface.
+Nexlayer CLI lets you deploy fullstack and AI-powered apps to the cloud in seconds—no infrastructure setup required.
 
-## Command Structure
-
-Nexlayer commands follow this general structure:
-```bash
-nexlayer <command> [subcommand] [flags]
-```
-
-## Global Flags
-
-- `--config string`: Path to config file (default: ~/.nexlayer/config.yaml)
-- `--debug`: Enable debug mode
-- `--log-level string`: Log level (debug, info, warn, error) (default: info)
-- `--version`: Show version information
-
-## Core Commands
-
-### Configuration
+## 🚀 Quick Start
 
 ```bash
-nexlayer config init      # Initialize configuration
-nexlayer config edit      # Edit configuration
-nexlayer config validate  # Validate configuration
-nexlayer config show      # Show current configuration
+# Install Nexlayer CLI
+curl -sSL https://get.nexlayer.io | bash
+
+# Initialize your project
+nexlayer init
+
+# Deploy it
+nexlayer deploy
 ```
 
-### Project Management
+Your app will be live on a Nexlayer URL. Simple as that.
 
-```bash
-nexlayer init <project>   # Initialize a new project
-nexlayer status          # Show project status
-nexlayer list            # List project components
-```
+---
 
-### Agent Management
+## 🔧 Common Commands
 
-```bash
-nexlayer agent create <name>    # Create a new agent
-nexlayer agent config <name>    # Configure an agent
-nexlayer agent start <name>     # Start an agent
-nexlayer agent stop <name>      # Stop an agent
-nexlayer agent list            # List all agents
-nexlayer agent status <name>   # Show agent status
-```
+| Command              | Description                       |
+| -------------------- | --------------------------------- |
+| `nexlayer init`      | Set up your existing project      |
+| `nexlayer deploy`    | Launch your app live on Nexlayer  |
+| `nexlayer templates` | Browse AI and fullstack templates |
+| `nexlayer install`   | Update the CLI                    |
 
-### Web Interface
+---
 
-```bash
-nexlayer web start       # Start the web interface
-nexlayer web stop        # Stop the web interface
-nexlayer web status      # Show web interface status
-```
+## 📘 Full CLI Documentation
 
-## Advanced Commands
+For advanced options, command flags, templates, AI deployment guides, and troubleshooting:
 
-### CI/CD Integration
+👉 **[View the CLI GitHub Repository](https://github.com/Nexlayer/nexlayer-cli)**
 
-```bash
-nexlayer ci init         # Initialize CI/CD configuration
-nexlayer ci validate     # Validate CI/CD configuration
-nexlayer ci run          # Run CI/CD pipeline
-```
+You'll find full reference documentation, install scripts, and release notes.
 
-### Logging and Debugging
+---
 
-```bash
-nexlayer logs            # Show logs
-nexlayer logs tail       # Tail logs
-nexlayer logs clear      # Clear logs
-nexlayer doctor          # Run diagnostics
-```
+## 🧠 What You Can Deploy
 
-## Command Examples
+* AI chatbots, RAG, or multi-model apps
+* Web frontends (Next.js, React, etc.)
+* Python / FastAPI / Node.js backends
+* Postgres or vector DBs
+* Anything you can run in a container
 
-### Initialize a New Project
+---
 
-```bash
-# Create a new project
-nexlayer init my-project
+## Need Help?
 
-# Navigate to project directory
-cd my-project
-
-# Initialize configuration
-nexlayer config init
-
-# Create and configure an agent
-nexlayer agent create my-agent
-nexlayer agent config my-agent
-
-# Start the agent
-nexlayer agent start my-agent
-```
-
-### Manage Configuration
-
-```bash
-# Edit configuration
-nexlayer config edit
-
-# Validate configuration
-nexlayer config validate
-
-# Show current configuration
-nexlayer config show
-```
-
-### Monitor and Debug
-
-```bash
-# Check project status
-nexlayer status
-
-# View logs
-nexlayer logs
-
-# Run diagnostics
-nexlayer doctor
-```
-
-## Environment Variables
-
-- `NEXLAYER_CONFIG`: Path to config file
-- `NEXLAYER_LOG_LEVEL`: Log level
-- `NEXLAYER_DEBUG`: Enable debug mode
-
-## Configuration File
-
-The configuration file (default: `~/.nexlayer/config.yaml`) supports the following structure:
-
-```yaml
-version: "1.0"
-log:
-  level: info
-  file: ~/.nexlayer/logs/nexlayer.log
-agents:
-  - name: my-agent
-    type: default
-    config:
-      # Agent-specific configuration
-web:
-  port: 8080
-  host: localhost
-```
-
-## Best Practices
-
-1. Always validate configuration before making changes
-2. Use version control for your configuration files
-3. Keep logs for debugging purposes
-4. Use the doctor command to diagnose issues
-5. Follow the principle of least privilege when configuring agents
-
-## Troubleshooting
-
-Common issues and solutions:
-
-1. **Command not found**
-   - Verify installation
-   - Check PATH environment variable
-   - Reinstall if necessary
-
-2. **Configuration errors**
-   - Validate configuration file
-   - Check file permissions
-   - Verify YAML syntax
-
-3. **Agent issues**
-   - Check agent logs
-   - Verify agent configuration
-   - Restart agent if necessary
-
-For more detailed information, see our [Examples](examples.md) or [FAQ](../get-started/faq.md). 
+* Read the [Nexlayer Docs](https://docs.nexlayer.com)
+* Visit the [GitHub CLI Repo](https://github.com/Nexlayer/nexlayer-cli)
+* Email: [support@nexlayer.io](mailto:support@nexlayer.io)

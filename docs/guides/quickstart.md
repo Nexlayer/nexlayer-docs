@@ -1,3 +1,99 @@
+# 🔥 Quick Start: Deploy in 5 Minutes
+
+Let's get your first app running on Nexlayer — the cloud built for speed, simplicity, and scale.
+
+## 📝 Step 1: Create `nexlayer.yaml`
+
+Start with the simplest deployment possible — a single web service.
+
+```yaml
+application:
+  name: "hello-nexlayer"
+  pods:
+    - name: web
+      image: "your-username/hello-world:v1.0.0" # Replace with your actual image on Docker Hub or GHCR
+      path: /
+      servicePorts:
+        - 80
+```
+
+💡 Tip: Use `nexlayer init` or ask ChatGPT to generate this file for you from a short description like:
+"A simple web app that listens on port 80 and responds with Hello World."
+
+## 🚀 Step 2: Deploy it
+
+From your terminal:
+
+```bash
+curl -X POST https://app.nexlayer.io/startUserDeployment \
+  -H "Content-Type: text/x-yaml" \
+  --data-binary @nexlayer.yaml
+```
+
+Or use the Nexlayer CLI:
+
+```bash
+nexlayer deploy
+```
+
+Or just say in Cursor:
+
+"Deploy my app to nexlayer.com"
+
+## 🌐 Step 3: You're live
+
+You'll get a live URL like:
+
+```
+https://hello-nexlayer.web.pod.nexlayer.app
+```
+
+And your app will auto-scale, restart on failure, and self-heal — no infra setup required.
+
+---
+
+## 🧱 Scaling Up: Add More Pods Like Lego Blocks
+
+Nexlayer pods are like Lego pieces — each one can serve a specific role (frontend, backend, DB, cache, etc.) and they automatically snap together using `<pod-name>.pod`.
+
+Here's how you'd add a backend pod that your frontend can talk to:
+
+```yaml
+application:
+  name: "hello-fullstack"
+  pods:
+    - name: frontend
+      image: "your-username/nextjs-frontend:v1.0.0"
+      path: /
+      servicePorts:
+        - 3000
+      vars:
+        API_URL: "http://backend.pod:4000" # <— automatic service discovery
+
+    - name: backend
+      image: "your-username/fastapi-backend:v1.0.0"
+      path: /api
+      servicePorts:
+        - 4000
+```
+
+✅ No IP addresses  
+✅ No manual networking  
+✅ Just name your pods and connect them like variables
+
+🧠 Pod-to-pod communication just works using the `.pod` convention — e.g. `backend.pod`, `postgres.pod`, `auth.pod`.
+
+---
+
+## 🧪 Next Steps
+- Add a database pod (like postgres)
+- Use volumes for persistent storage
+- Use secrets to securely mount API keys or credentials
+- Reference other services with `<pod-name>.pod`
+- Explore full examples in the sidebar to scale from toy apps to production-ready systems.
+
+---
+
 # Quickstart Guide
 
 This guide will help you get started with Nexlayer quickly. Follow these steps to install and begin using Nexlayer.

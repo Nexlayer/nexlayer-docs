@@ -8,12 +8,6 @@ No infra. No config hell. Just vibes.
 
 ## ✅ Step 1: Create a `nexlayer.yaml`
 
-You can write it yourself or start from our official examples:
-👉 [Nexlayer YAML Templates](https://github.com/Nexlayer/nexlayer-deployment-yaml)
-👉 [Live Example Apps in the Playground](https://github.com/Nexlayer/playground)
-
-Then in the root of your project, add a file called:
-
 In the root of your project, add a file called:
 
 ```
@@ -87,50 +81,9 @@ curl -X POST https://app.nexlayer.io/startUserDeployment \
 nexlayer deploy
 ```
 
-This command works out of the box if your `nexlayer.yaml` and Docker image are ready.
+> Don't have the CLI yet? Install it from [nexlayer.io/docs/cli](https://nexlayer.io/docs/cli)
 
-Want Nexlayer to handle the image creation for you?
-Try:
-
-```bash
-nexlayer init
-```
-
-This packages your project, auto-generates a Dockerfile, builds and pushes your image, and patches your YAML.
-
-> 🛠 CLI repo: [github.com/Nexlayer/nexlayer-cli](https://github.com/Nexlayer/nexlayer-cli)
-
-```bash
-curl -X POST "https://app.nexlayer.io/extendDeployment" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "applicationName": "My MERN App",
-    "sessionToken": "your-session-token"
-  }'
-```
-
-## Best Practices
-
-1. **Error Handling**
-   - Always check response status codes
-   - Implement proper error handling
-   - Use exponential backoff for retries
-
-2. **Rate Limiting**
-   - Respect rate limits (100 requests per minute)
-   - Implement request throttling
-   - Cache responses when appropriate
-
-3. **Security**
-   - Never share your session tokens
-   - Use HTTPS for all requests
-   - Implement proper token rotation
-
-## Next Steps
-
-- Explore the [full API reference](../api/README.md)
-- Check out our [SDK documentation](../sdk/README.md)
-- Visit our [GitHub repository](https://github.com/Nexlayer/api-reference) 
+---
 
 ## 🎉 You're Live
 
@@ -142,18 +95,14 @@ https://my-frontend.alpha.nexlayer.ai
 
 Your frontend is now deployed to global cloud infrastructure — no servers, no Kubernetes, no headaches.
 
+---
+
 ## ➕ What's Next?
 
-* Add a backend pod
-* Add a database
+* [Add a backend + database pod (MERN style)](./quickstart-mern.md)
 * Make it permanent by adding a `url:` to your YAML
 
 But if all you wanted was to vibe and deploy your site — you're done.
 
 ---
-
-## ➡️ Continue: Add a Backend and Database (MERN Style)
-
-Ready to go full stack? [Follow the advanced quickstart →](./quickstart-mern.md)
-
----
+ 

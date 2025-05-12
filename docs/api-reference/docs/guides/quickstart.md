@@ -151,3 +151,9 @@ Your frontend is now deployed to global cloud infrastructure — no servers, no 
 But if all you wanted was to vibe and deploy your site — you're done.
 
 ---
+
+## ➡️ Continue: Add a Backend and Database (MERN Style)
+
+Ready to go full stack? [Follow the advanced quickstart →](./quickstart-mern.md)
+
+---

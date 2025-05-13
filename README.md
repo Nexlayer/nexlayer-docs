@@ -1,4 +1,4 @@
-# 📚 Nexlayer Docs
+#Nexlayer Documentation
 
 Welcome to the official documentation repo for **[Nexlayer](https://nexlayer.com)** — the AI-native cloud that turns code or prompts into scalable, production-grade applications in seconds.
 

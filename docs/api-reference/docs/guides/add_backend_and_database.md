@@ -1,14 +1,14 @@
 # 🔁 Nexlayer Quickstart: Add a Backend and Database (MERN Style)
 
-Already launched your frontend? Let's go full stack.
+Already launched your frontend? Let’s go full stack.
 
-In this guide, we'll add a **Node.js backend API** and a **MongoDB database** to your existing Nexlayer deployment — no infra, no devops.
+In this guide, we’ll add a **Node.js backend API** and a **MongoDB database** to your existing Nexlayer deployment — no infra, no devops.
 
 ---
 
 ## ✅ Step 1: Add Backend and DB Pods to `nexlayer.yaml`
 
-Here's how to extend your existing config:
+Here’s how to extend your existing config:
 
 ```yaml
 application:
@@ -43,7 +43,7 @@ application:
 
 ---
 
-## 🛠️ Don't Have a Docker Image for Your Backend?
+## 🛠️ Don’t Have a Docker Image for Your Backend?
 
 Prompt your AI assistant:
 
@@ -53,7 +53,7 @@ Build it locally and push the image to ttl.sh.
 Patch the nexlayer.yaml with the image URL.
 ```
 
-You'll get something like:
+You’ll get something like:
 
 ```yaml
 image: "ttl.sh/my-backend-abc123:1h"
@@ -65,7 +65,7 @@ Paste that into the `backend` pod section.
 
 ## 🚀 Deploy the Full Stack
 
-If you're using CLI:
+If you’re using CLI:
 
 ```bash
 nexlayer deploy
@@ -83,7 +83,7 @@ curl -X POST https://app.nexlayer.io/startUserDeployment \
 
 ## 🧪 Test It
 
-You'll get a live app like:
+You’ll get a live app like:
 
 ```
 https://my-mern-app.alpha.nexlayer.ai
@@ -103,7 +103,7 @@ You now have:
 
 ---
 
-## 🔁 What's Next?
+## 🔁 What’s Next?
 
 * Secure your DB with secrets
 * Add persistent volume storage if needed
@@ -116,4 +116,4 @@ Want help? Just prompt your AI:
 Help me add auth, secrets, and a production Mongo cluster to my Nexlayer app.
 ```
 
---- 
+---

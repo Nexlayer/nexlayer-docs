@@ -26,7 +26,6 @@ This repo contains all the content for the Nexlayer documentation site, includin
 
 - Getting Started guides
 - YAML and CLI usage
-- Agent & AI integration flows
 - Post-deployment workflows
 - Real-world examples and patterns
 

@@ -58,6 +58,7 @@ nav:
   - Code_of_conduct: api-reference/CODE_OF_CONDUCT.md
   - Notice: api-reference/NOTICE.md
   - Readme: api-reference/readme.md
+  - Readme: api-reference/examples/go/readme.md
   - Readme: api-reference/docs/api/readme.md
   - Authentication: api-reference/docs/guides/authentication.md
   - Quickstart: api-reference/docs/guides/quickstart.md

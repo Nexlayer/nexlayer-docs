@@ -52,6 +52,7 @@ nav:
     - Post Deploy: guides/post-deploy.md
     - Web UI: guides/web-ui.md
   - Deployment:
+    - Advanced: deployment/advanced.md
     - Readme: deployment/readme.md
 - CLI: guides/cli.md
 - API & SDK:

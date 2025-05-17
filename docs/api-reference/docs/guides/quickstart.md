@@ -1,108 +1,119 @@
-# ⚡️ Nexlayer Quickstart: Launch Your Frontend in 60 Seconds
+# Quick Start Guide
 
-Want to see your frontend live on the internet? You're 3 steps away.
+Welcome to the Nexlayer API! This guide will help you get started with using our API to manage deployments and monitor your applications.
 
-No infra. No config hell. Just vibes.
+## Prerequisites
 
----
+- A Nexlayer account
+- Basic understanding of REST APIs
+- Familiarity with YAML configuration
+- cURL or a similar HTTP client
 
-## ✅ Step 1: Create a `nexlayer.yaml`
+## Authentication
 
-In the root of your project, add a file called:
-
-```
-nexlayer.yaml
-```
-
----
-
-## ✏️ Step 2: Paste this starter config
-
-```yaml
-application:
-  name: "my-frontend" # Change this to your app name
-  pods:
-    - name: web
-      image: "ttl.sh/my-frontend-live:1h" # <- Replace with your actual image
-      path: /
-      servicePorts:
-        - 3000
-```
-
-> 🧠 `ttl.sh` is a free, temporary container registry that holds your image for 1 hour. Perfect for quick testing.
-
----
-
-## 🛠️ Don't Have a Docker Image Yet?
-
-No worries. If you're using **Cursor**, **Windsurf**, **Claude Code**, or **Warp**, just copy/paste this prompt:
-
-```
-Create a Dockerfile for my frontend app.
-Build it locally and push the Docker image to ttl.sh.
-Patch my nexlayer.yaml with the new image URL.
-```
-
-You'll get something like:
-
-```yaml
-image: "ttl.sh/my-frontend-xyz:1h"
-```
-
-Paste that into your YAML, and you're good to go.
-
-> 🔥 Want something permanent? Push to Docker Hub or GHCR instead.
-
----
-
-## 🚀 Step 3: Deploy It
-
-Pick your vibe:
-
-### Option A: cURL (1-liner)
-
-You can run this directly, or just ask your AI assistant:
-
-```
-Generate a curl command that deploys this nexlayer.yaml to Nexlayer.com
-```
-
-Then run:
+All API requests require a session token. You can obtain a session token by starting a deployment:
 
 ```bash
-curl -X POST https://app.nexlayer.io/startUserDeployment \
+curl -X POST "https://app.nexlayer.io/startUserDeployment" \
   -H "Content-Type: text/x-yaml" \
   --data-binary @nexlayer.yaml
 ```
 
-### Option B: CLI (recommended)
+The response will include a `sessionToken` that you'll use for subsequent requests.
+
+## Starting a Deployment
+
+1. Create a YAML configuration file (`nexlayer.yaml`):
+
+```yaml
+application:
+  name: My MERN App
+  pods:
+  - name: mongo
+    image: my-username/my-mongo:v1.0.0
+    vars:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: passw0rd
+      MONGO_INITDB_DATABASE: todo
+    servicePorts:
+    - 27017
+    volumes:
+    - name: mongo-data-volume
+      size: 2Gi
+      mountPath: /data
+  - name: express
+    image: my-username/my-express:v1.0.0
+    vars:
+      MONGODB_URL: mongodb://mongo:passw0rd@mongo.pod:27017/
+    servicePorts:
+    - 3000
+  - name: react
+    path: /
+    tag: my-username/my-react:v1.0.0
+    vars:
+      EXPRESS_URL: http://express.pod:3000
+    servicePorts:
+    - 80
+```
+
+2. Start the deployment:
 
 ```bash
-nexlayer deploy
+curl -X POST "https://app.nexlayer.io/startUserDeployment" \
+  -H "Content-Type: text/x-yaml" \
+  --data-binary @nexlayer.yaml
 ```
 
-> Don't have the CLI yet? Install it from [nexlayer.io/docs/cli](https://nexlayer.io/docs/cli)
+3. The response will include:
+   - Deployment URL
+   - Session token
+   - Status information
+   - Extension and claim instructions
 
----
+## Monitoring Deployment Status
 
-## 🎉 You're Live
+Check the status of your pods:
 
-You'll get a URL like:
-
+```bash
+curl -X POST "https://app.nexlayer.io/getPodsStatus" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "sessionToken": "your-session-token",
+    "applicationName": "My MERN App"
+  }'
 ```
-https://my-frontend.alpha.nexlayer.ai
+
+## Extending Deployment Duration
+
+If you need more time with your deployment:
+
+```bash
+curl -X POST "https://app.nexlayer.io/extendDeployment" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "applicationName": "My MERN App",
+    "sessionToken": "your-session-token"
+  }'
 ```
 
-Your frontend is now deployed to global cloud infrastructure — no servers, no Kubernetes, no headaches.
+## Best Practices
 
----
+1. **Error Handling**
+   - Always check response status codes
+   - Implement proper error handling
+   - Use exponential backoff for retries
 
-## ➕ What's Next?
+2. **Rate Limiting**
+   - Respect rate limits (100 requests per minute)
+   - Implement request throttling
+   - Cache responses when appropriate
 
-* [Add a backend + database pod (MERN style)](./quickstart-mern.md)
-* Make it permanent by adding a `url:` to your YAML
+3. **Security**
+   - Never share your session tokens
+   - Use HTTPS for all requests
+   - Implement proper token rotation
 
-But if all you wanted was to vibe and deploy your site — you're done.
+## Next Steps
 
----
- 
+- Explore the [full API reference](../api/README.md)
+- Visit our [GitHub repository](https://github.com/Nexlayer/api-reference) 
